@@ -160,8 +160,8 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				AECDFD0325D69498D53382C1 /* [CP] Embed Pods Frameworks */,
 				3E6DE90065F61C8F17E503AD /* [CP] Copy Pods Resources */,
+				1419579E21351888886A6C7B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -183,8 +183,8 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				48FAD7D160286C109941A561 /* [CP] Embed Pods Frameworks */,
 				183C8798B2FD2ED8380092A4 /* [CP] Copy Pods Resources */,
+				EA71D137440E848CEC3DB157 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -265,6 +265,23 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
+		1419579E21351888886A6C7B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		183C8798B2FD2ED8380092A4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -297,40 +314,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		48FAD7D160286C109941A561 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM/Pods-GeographicalApplicationRM-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM/Pods-GeographicalApplicationRM-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM/Pods-GeographicalApplicationRM-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AECDFD0325D69498D53382C1 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CFD82DB1B0D6568B2C99CAE1 /* [CP] Check Pods Manifest.lock */ = {
@@ -375,6 +358,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA71D137440E848CEC3DB157 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM/Pods-GeographicalApplicationRM-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM/Pods-GeographicalApplicationRM-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GeographicalApplicationRM/Pods-GeographicalApplicationRM-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
