@@ -14,6 +14,7 @@
 		3D824E6334EDA6EB9FF458F3 /* libPods-GeographicalApplicationRM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7F8281BA21B3B6DF8518F81 /* libPods-GeographicalApplicationRM.a */; };
 		5792B05F798B50BF163A06C2 /* libPods-GeographicalApplicationRM-GeographicalApplicationRMTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5408F37665B907F0884186EA /* libPods-GeographicalApplicationRM-GeographicalApplicationRMTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		89862BB5270C856A0021724A /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 89862BB4270C856A0021724A /* fonts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		5408F37665B907F0884186EA /* libPods-GeographicalApplicationRM-GeographicalApplicationRMTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GeographicalApplicationRM-GeographicalApplicationRMTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = GeographicalApplicationRM/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		82A1A2F0B4B198C6C81D4BB2 /* Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.debug.xcconfig"; path = "Target Support Files/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.debug.xcconfig"; sourceTree = "<group>"; };
+		89862BB4270C856A0021724A /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		B7F8281BA21B3B6DF8518F81 /* libPods-GeographicalApplicationRM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GeographicalApplicationRM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0116F84CD3D13825F0B61AB /* Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.release.xcconfig"; path = "Target Support Files/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.release.xcconfig"; sourceTree = "<group>"; };
 		E4BE0B4AE166DA58559587BC /* Pods-GeographicalApplicationRM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalApplicationRM.release.xcconfig"; path = "Target Support Files/Pods-GeographicalApplicationRM/Pods-GeographicalApplicationRM.release.xcconfig"; sourceTree = "<group>"; };
@@ -114,7 +116,6 @@
 				82A1A2F0B4B198C6C81D4BB2 /* Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.debug.xcconfig */,
 				C0116F84CD3D13825F0B61AB /* Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -128,6 +129,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				89862BB4270C856A0021724A /* fonts */,
 				13B07FAE1A68108700A75B9A /* GeographicalApplicationRM */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* GeographicalApplicationRMTests */,
@@ -243,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89862BB5270C856A0021724A /* fonts in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);

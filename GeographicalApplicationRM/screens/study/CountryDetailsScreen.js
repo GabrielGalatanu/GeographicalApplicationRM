@@ -6,16 +6,15 @@ const CountryDetailsScreen = props => {
   return (
     <View style={styles.container}>
       <Text> CountryDetailsScreen </Text>
-      
     </View>
   );
 };
 
 export const screenOptions = () => {
-    return {
-      headerTitle: 'Country Details!',
-    };
+  return {
+    headerTitle: 'Country Details!',
   };
+};
 
 const styles = StyleSheet.create({
   container: {

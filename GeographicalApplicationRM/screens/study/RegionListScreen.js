@@ -3,6 +3,9 @@ import React from 'react';
 
 import {Button, StyleSheet, Text, View} from 'react-native';
 
+// Import vector icons
+import Icon from 'react-native-vector-icons/Ionicons';
+
 const RegionListScreen = props => {
 
   return (
@@ -11,6 +14,7 @@ const RegionListScreen = props => {
       <Button title="Go to Country List" onPress={() => {
         props.navigation.navigate('CountriesListScreen');
       }}/>
+       <Icon name="game-controller" size={30} color="#900" />
     </View>
   );
 };

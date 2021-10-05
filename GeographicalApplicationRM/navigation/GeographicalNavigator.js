@@ -1,6 +1,9 @@
 import React from 'react';
 
 import {Platform} from 'react-native';
+import Colors from '../constants/Colors';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -26,7 +29,7 @@ const StudyStackNavigator = createNativeStackNavigator();
 
 export const StudyNavigator = () => {
   return (
-    <StudyStackNavigator.Navigator >
+    <StudyStackNavigator.Navigator>
       <StudyStackNavigator.Screen
         name="RegionListScreen"
         component={RegionListScreen}
@@ -60,12 +63,30 @@ export const GameNavigator = () => {
   );
 };
 
-
 const GeographicalBottomTabNavigator = createBottomTabNavigator();
 
 export const GeographicalTabNavigator = () => {
   return (
-    <GeographicalBottomTabNavigator.Navigator screenOptions={defaultNavOptions}>
+    <GeographicalBottomTabNavigator.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
+
+          if (route.name === 'Study') {
+            iconName = 'book';
+            return <FontAwesome name={iconName} size={25} color={color} />;
+          }
+
+          if (route.name === 'Game') {
+            iconName = 'game-controller';
+            return <Ionicons name={iconName} size={25} color={color} />;
+          }
+        },
+        tabBarActiveTintColor:
+          Platform.OS === 'android' ? Colors.primaryColor : Colors.accentColor,
+        tabBarInactiveTintColor: 'gray',
+        headerShown: false,
+      })}>
       <GeographicalBottomTabNavigator.Screen
         name="Study"
         component={StudyNavigator}
