@@ -1,43 +1,31 @@
 import React from 'react';
 
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
+import { GeographicalTabNavigator } from './navigation/GeographicalNavigator';
+import {NavigationContainer} from '@react-navigation/native';
 
 
 const App = () => {
-  
-
   return (
-    <View style={styles.container}>
+    <NavigationContainer>
 
-      <Text> Home Screen </Text>
+      <GeographicalTabNavigator/>
 
-    </View>
+    </NavigationContainer>
   );
 };
+{/* <View style={styles.container}>
 
+<Text>Abecedar</Text>
+</View> */}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default App;
