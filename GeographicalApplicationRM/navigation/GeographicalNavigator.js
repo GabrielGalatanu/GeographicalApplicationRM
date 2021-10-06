@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Platform} from 'react-native';
+import {Platform, Text} from 'react-native';
 import Colors from '../constants/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -74,18 +74,24 @@ export const GeographicalTabNavigator = () => {
 
           if (route.name === 'Study') {
             iconName = 'book';
-            return <FontAwesome name={iconName} size={25} color={color} />;
+            return <FontAwesome name={iconName} size={30} color={color} />;
           }
 
           if (route.name === 'Game') {
             iconName = 'game-controller';
-            return <Ionicons name={iconName} size={25} color={color} />;
+            return <Ionicons name={iconName} size={30} color={color} />;
           }
         },
-        tabBarActiveTintColor:
-          Platform.OS === 'android' ? Colors.primaryColor : Colors.accentColor,
+        tabBarActiveTintColor: 'white',
         tabBarInactiveTintColor: 'gray',
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: Colors.twitchBottom,
+        },  
+        tabBarLabelStyle: {
+          fontSize: 15,
+          fontFamily: 'Yrsa-Bold',
+        }  
       })}>
       <GeographicalBottomTabNavigator.Screen
         name="Study"

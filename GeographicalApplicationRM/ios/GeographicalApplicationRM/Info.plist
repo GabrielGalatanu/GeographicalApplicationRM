@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -55,6 +55,16 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Yrsa-Bold.ttf</string>
+		<string>Yrsa-BoldItalic.ttf</string>
+		<string>Yrsa-Italic.ttf</string>
+		<string>Yrsa-Light.ttf</string>
+		<string>Yrsa-LightItalic.ttf</string>
+		<string>Yrsa-Medium.ttf</string>
+		<string>Yrsa-MediumItalic.ttf</string>
+		<string>Yrsa-Regular.ttf</string>
+		<string>Yrsa-SemiBold.ttf</string>
+		<string>Yrsa-SemiBoldItalic.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

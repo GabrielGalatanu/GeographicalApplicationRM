@@ -11,10 +11,20 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		34F83BB487764CAB98812E19 /* Yrsa-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21634B299D16421BB0A5825C /* Yrsa-LightItalic.ttf */; };
+		3AFB3B501AF94FEB9EE65DB8 /* Yrsa-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2FBC575F0AA4CECA9CC5586 /* Yrsa-Italic.ttf */; };
 		3D824E6334EDA6EB9FF458F3 /* libPods-GeographicalApplicationRM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7F8281BA21B3B6DF8518F81 /* libPods-GeographicalApplicationRM.a */; };
 		5792B05F798B50BF163A06C2 /* libPods-GeographicalApplicationRM-GeographicalApplicationRMTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5408F37665B907F0884186EA /* libPods-GeographicalApplicationRM-GeographicalApplicationRMTests.a */; };
+		57E7CA3D9289464F9F0CBB16 /* Yrsa-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 333462A7DE2245D0A46D95FD /* Yrsa-Light.ttf */; };
+		64DD2B965D0940C59BA47DF3 /* Yrsa-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0073DE00497E41089D7F70B3 /* Yrsa-Bold.ttf */; };
+		7E3D5515B4F7412A9D139E94 /* Yrsa-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9F79AE59B1947D78405F536 /* Yrsa-SemiBoldItalic.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		89862BB5270C856A0021724A /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 89862BB4270C856A0021724A /* fonts */; };
+		8F45A00B835C4E848DCFA07A /* Yrsa-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCA131232D3C461992625DBA /* Yrsa-SemiBold.ttf */; };
+		B1738F565AC748F6AB52F8DD /* Yrsa-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E7BDBC5DBD743F1B052969F /* Yrsa-Regular.ttf */; };
+		BA7BE2A6458F42C8A29D2661 /* Yrsa-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D06E68A99C5F46439B8BC251 /* Yrsa-BoldItalic.ttf */; };
+		D1F08B4DD62640BC91328031 /* Yrsa-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CA772352293428D98687527 /* Yrsa-MediumItalic.ttf */; };
+		FC46CD310F7B4BB5BC4833D3 /* Yrsa-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 447E6D0CF88F4E2695EAEC00 /* Yrsa-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,24 +38,50 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0073DE00497E41089D7F70B3 /* Yrsa-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Yrsa-Bold.ttf"; path = "../assets/fonts/Yrsa-Bold.ttf"; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* GeographicalApplicationRMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeographicalApplicationRMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* GeographicalApplicationRMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeographicalApplicationRMTests.m; sourceTree = "<group>"; };
+		0FE6DA68961E448FB646ECEC /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* GeographicalApplicationRM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeographicalApplicationRM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = GeographicalApplicationRM/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = GeographicalApplicationRM/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = GeographicalApplicationRM/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = GeographicalApplicationRM/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = GeographicalApplicationRM/main.m; sourceTree = "<group>"; };
+		1E7BDBC5DBD743F1B052969F /* Yrsa-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Yrsa-Regular.ttf"; path = "../assets/fonts/Yrsa-Regular.ttf"; sourceTree = "<group>"; };
+		21634B299D16421BB0A5825C /* Yrsa-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Yrsa-LightItalic.ttf"; path = "../assets/fonts/Yrsa-LightItalic.ttf"; sourceTree = "<group>"; };
+		283AC4F198084339AC2CD350 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		29CC943ECCC70615E83FBAD1 /* Pods-GeographicalApplicationRM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalApplicationRM.debug.xcconfig"; path = "Target Support Files/Pods-GeographicalApplicationRM/Pods-GeographicalApplicationRM.debug.xcconfig"; sourceTree = "<group>"; };
+		323437C243A84A598DC1513C /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		333462A7DE2245D0A46D95FD /* Yrsa-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Yrsa-Light.ttf"; path = "../assets/fonts/Yrsa-Light.ttf"; sourceTree = "<group>"; };
+		34EF3FE3D2244FE284968651 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		3A08E66AA9084CB18D7F2CB1 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
+		3BAC1B3CAF1B44A5A695FC76 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		441CE6137F634A519E1DF851 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		447E6D0CF88F4E2695EAEC00 /* Yrsa-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Yrsa-Medium.ttf"; path = "../assets/fonts/Yrsa-Medium.ttf"; sourceTree = "<group>"; };
 		5408F37665B907F0884186EA /* libPods-GeographicalApplicationRM-GeographicalApplicationRMTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GeographicalApplicationRM-GeographicalApplicationRMTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B8C9875B58F4987AAF39006 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		7CA772352293428D98687527 /* Yrsa-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Yrsa-MediumItalic.ttf"; path = "../assets/fonts/Yrsa-MediumItalic.ttf"; sourceTree = "<group>"; };
+		7EE05491CD544642A423875F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = GeographicalApplicationRM/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		82A1A2F0B4B198C6C81D4BB2 /* Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.debug.xcconfig"; path = "Target Support Files/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.debug.xcconfig"; sourceTree = "<group>"; };
+		863B38D986E14BF0B6B3ADE5 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		89862BB4270C856A0021724A /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
+		902B9165929E4453929510DB /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		9BED5E4ACEA248CAA80D42A2 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		AD399B7A67564B8C8FC165A4 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		B7F8281BA21B3B6DF8518F81 /* libPods-GeographicalApplicationRM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GeographicalApplicationRM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0116F84CD3D13825F0B61AB /* Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.release.xcconfig"; path = "Target Support Files/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests/Pods-GeographicalApplicationRM-GeographicalApplicationRMTests.release.xcconfig"; sourceTree = "<group>"; };
+		C8CAD24EF4804B098131A87D /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		D06E68A99C5F46439B8BC251 /* Yrsa-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Yrsa-BoldItalic.ttf"; path = "../assets/fonts/Yrsa-BoldItalic.ttf"; sourceTree = "<group>"; };
+		E2FBC575F0AA4CECA9CC5586 /* Yrsa-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Yrsa-Italic.ttf"; path = "../assets/fonts/Yrsa-Italic.ttf"; sourceTree = "<group>"; };
 		E4BE0B4AE166DA58559587BC /* Pods-GeographicalApplicationRM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeographicalApplicationRM.release.xcconfig"; path = "Target Support Files/Pods-GeographicalApplicationRM/Pods-GeographicalApplicationRM.release.xcconfig"; sourceTree = "<group>"; };
+		EAFF2D7B1E2845DBB7581ABB /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F9F79AE59B1947D78405F536 /* Yrsa-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Yrsa-SemiBoldItalic.ttf"; path = "../assets/fonts/Yrsa-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		FBDFAD26A5E04A1991B14A42 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		FCA131232D3C461992625DBA /* Yrsa-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Yrsa-SemiBold.ttf"; path = "../assets/fonts/Yrsa-SemiBold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +172,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				49A3A5EE509080DBAA7A8889 /* Pods */,
+				D358A6F4D5A6486B8E429128 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -149,6 +186,39 @@
 				00E356EE1AD99517003FC87E /* GeographicalApplicationRMTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D358A6F4D5A6486B8E429128 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0073DE00497E41089D7F70B3 /* Yrsa-Bold.ttf */,
+				D06E68A99C5F46439B8BC251 /* Yrsa-BoldItalic.ttf */,
+				E2FBC575F0AA4CECA9CC5586 /* Yrsa-Italic.ttf */,
+				333462A7DE2245D0A46D95FD /* Yrsa-Light.ttf */,
+				21634B299D16421BB0A5825C /* Yrsa-LightItalic.ttf */,
+				447E6D0CF88F4E2695EAEC00 /* Yrsa-Medium.ttf */,
+				7CA772352293428D98687527 /* Yrsa-MediumItalic.ttf */,
+				1E7BDBC5DBD743F1B052969F /* Yrsa-Regular.ttf */,
+				FCA131232D3C461992625DBA /* Yrsa-SemiBold.ttf */,
+				F9F79AE59B1947D78405F536 /* Yrsa-SemiBoldItalic.ttf */,
+				863B38D986E14BF0B6B3ADE5 /* AntDesign.ttf */,
+				34EF3FE3D2244FE284968651 /* Entypo.ttf */,
+				323437C243A84A598DC1513C /* EvilIcons.ttf */,
+				0FE6DA68961E448FB646ECEC /* Feather.ttf */,
+				9BED5E4ACEA248CAA80D42A2 /* FontAwesome.ttf */,
+				C8CAD24EF4804B098131A87D /* FontAwesome5_Brands.ttf */,
+				AD399B7A67564B8C8FC165A4 /* FontAwesome5_Regular.ttf */,
+				EAFF2D7B1E2845DBB7581ABB /* FontAwesome5_Solid.ttf */,
+				3A08E66AA9084CB18D7F2CB1 /* Fontisto.ttf */,
+				902B9165929E4453929510DB /* Foundation.ttf */,
+				441CE6137F634A519E1DF851 /* Ionicons.ttf */,
+				FBDFAD26A5E04A1991B14A42 /* MaterialCommunityIcons.ttf */,
+				3BAC1B3CAF1B44A5A695FC76 /* MaterialIcons.ttf */,
+				6B8C9875B58F4987AAF39006 /* Octicons.ttf */,
+				7EE05491CD544642A423875F /* SimpleLineIcons.ttf */,
+				283AC4F198084339AC2CD350 /* Zocial.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,6 +318,16 @@
 				89862BB5270C856A0021724A /* fonts in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				64DD2B965D0940C59BA47DF3 /* Yrsa-Bold.ttf in Resources */,
+				BA7BE2A6458F42C8A29D2661 /* Yrsa-BoldItalic.ttf in Resources */,
+				3AFB3B501AF94FEB9EE65DB8 /* Yrsa-Italic.ttf in Resources */,
+				57E7CA3D9289464F9F0CBB16 /* Yrsa-Light.ttf in Resources */,
+				34F83BB487764CAB98812E19 /* Yrsa-LightItalic.ttf in Resources */,
+				FC46CD310F7B4BB5BC4833D3 /* Yrsa-Medium.ttf in Resources */,
+				D1F08B4DD62640BC91328031 /* Yrsa-MediumItalic.ttf in Resources */,
+				B1738F565AC748F6AB52F8DD /* Yrsa-Regular.ttf in Resources */,
+				8F45A00B835C4E848DCFA07A /* Yrsa-SemiBold.ttf in Resources */,
+				7E3D5515B4F7412A9D139E94 /* Yrsa-SemiBoldItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
