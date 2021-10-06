@@ -4,9 +4,11 @@ import Colors from '../constants/Colors';
 
 const MenuButton = props => {
   return (
-    <TouchableOpacity style={styles.buttonContainer} onPress={() => {
+    <TouchableOpacity
+      style={styles.buttonContainer}
+      onPress={() => {
         props.onPress(props.label);
-    }}>
+      }}>
       <Text style={styles.buttonText}> {props.label} </Text>
     </TouchableOpacity>
   );

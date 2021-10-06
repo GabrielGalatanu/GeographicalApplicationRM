@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 import {StyleSheet} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
-import Colors from '../../constants/Colors';
 
-import MenuButton from '../../components/MenuButton';
+import Colors from 'constants/Colors';
+import MenuButton from 'components/MenuButton';
 
 const RegionListScreen = props => {
   useEffect(() => {
