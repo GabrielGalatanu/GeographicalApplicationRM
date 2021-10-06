@@ -1,26 +1,71 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
-import {Button,StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, FlatList, Text, ActivityIndicator} from 'react-native';
+import Colors from '../../constants/Colors';
+
+import LinearGradient from 'react-native-linear-gradient';
+import {getAllCountriesByRegionAPI} from '../../http/restcountries';
+
+import CountryButton from '../../components/CountryButton';
 
 const CountriesListScreen = props => {
+  const [countries, setCountries] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      setCountries(await getAllCountriesByRegionAPI(props.route.params.region));
+      setIsLoading(false);
+    })();
+  }, []);
+
+  const navigateToCountryDetailScreen = (country) => {
+    props.navigation.navigate('CountryDetailScreen', {country: country});
+  }
+
+  if (isLoading) {
+    return (
+      <LinearGradient
+        colors={[Colors.twitchGradientStart, Colors.twitchGradientEnd]}
+        style={styles.screen}>
+        <ActivityIndicator size="large" color={Colors.twitchHeader} />
+      </LinearGradient>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text> CountriesListScreen </Text>
-      <Button title="Go to Country Detail Screen" onPress={() => {
-        props.navigation.navigate('CountryDetailScreen');
-      }}/>
-    </View>
+    <LinearGradient
+      colors={[Colors.twitchGradientStart, Colors.twitchGradientEnd]}
+      style={styles.screen}>
+      <FlatList
+        data={countries}
+        renderItem={({item}) => {
+          return (
+           <CountryButton alpha2Code={item.alpha2Code} country={item.name} onPress={navigateToCountryDetailScreen} />
+          );
+        }}
+        keyExtractor={item => item.id}
+      />
+    </LinearGradient>
   );
 };
 
 export const screenOptions = () => {
-    return {
-      headerTitle: 'Countries List!',
-    };
+  return {
+    headerTitle: 'Countries List!',
+    headerTintColor: 'white',
+    headerStyle: {
+      backgroundColor: Colors.twitchHeader,
+    },
+    headerTitleStyle: {
+      fontFamily: 'Yrsa-Bold',
+      fontSize: 25,
+    },
   };
+};
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

@@ -26,7 +26,7 @@ export const getCountryAPI = async country => {
 export const getAllCountriesByRegionAPI = async region => {
   try {
     const response = await fetch(
-      `https://restcountries.com/v3.1/region/${region}`,
+      `https://restcountries.com/v2/continent/${region}`,
     );
     const json = await response.json();
 

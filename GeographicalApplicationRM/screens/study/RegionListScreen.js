@@ -14,15 +14,19 @@ const RegionListScreen = props => {
     // })();
   }, []);
 
+  const navigateToCountriesListScreen = region => {
+    props.navigation.navigate('CountriesListScreen', {region: region});
+  };
+
   return (
     <LinearGradient
       colors={[Colors.twitchGradientStart, Colors.twitchGradientEnd]}
       style={styles.screen}>
-      <MenuButton label="Africa" />
-      <MenuButton label="America" />
-      <MenuButton label="Asia" />
-      <MenuButton label="Europe" />
-      <MenuButton label="Oceania" />
+      <MenuButton label="Africa" onPress={navigateToCountriesListScreen} />
+      <MenuButton label="America" onPress={navigateToCountriesListScreen} />
+      <MenuButton label="Asia" onPress={navigateToCountriesListScreen} />
+      <MenuButton label="Europe" onPress={navigateToCountriesListScreen} />
+      <MenuButton label="Oceania" onPress={navigateToCountriesListScreen} />
     </LinearGradient>
   );
 };
@@ -36,14 +40,13 @@ export const screenOptions = () => {
     },
     headerTitleStyle: {
       fontFamily: 'Yrsa-Bold',
-      fontSize: 25,    
+      fontSize: 25,
     },
   };
 };
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: '#9FA8DA',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
