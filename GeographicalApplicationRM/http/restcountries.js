@@ -1,18 +1,22 @@
+import 'types/index.js';
+
+const restCountriesBaseUrl = 'https://restcountries.com/v2';
+
 /**
  * Returns all data about a country.
  *
  * @param {string} country - Country name.
- * @returns {Object}
+ * @param {Function} ifError - A function to run in case of an error.
+ * @returns {Promise<CountryArrayAPI[]>}
  */
-export const getCountryAPI = async country => {
+export const getCountryAPI = async (country, ifError) => {
   try {
-    const response = await fetch(
-      `https://restcountries.com/v2/name/${country}`,
-    );
+    const response = await fetch(`${restCountriesBaseUrl}/name/${country}a`);
     const json = await response.json();
     return json;
   } catch (error) {
-    console.error(error);
+    //console.error(error);
+    ifError();
   }
 };
 
@@ -20,18 +24,18 @@ export const getCountryAPI = async country => {
  * Returns all countries from a region.
  *
  * @param {string} region - Region name. (Europe, Africa, Americas, Asia, Oceania)
- * @returns {Object}
+ * @param {Function} ifError - A function to run in case of an error.
+ * @returns {Promise<CountryArrayAPI[]>}
  */
 
-export const getAllCountriesByRegionAPI = async region => {
+export const getAllCountriesByRegionAPI = async (region, ifError) => {
   try {
-    const response = await fetch(
-      `https://restcountries.com/v2/continent/${region}`,
-    );
+    const response = await fetch(`${restCountriesBaseUrl}/continent/${region}`);
     const json = await response.json();
 
     return json;
   } catch (error) {
-    console.error(error);
+    //console.error(error);
+    ifError();
   }
 };

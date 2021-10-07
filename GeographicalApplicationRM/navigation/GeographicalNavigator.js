@@ -1,6 +1,5 @@
 import React from 'react';
 
-import {Platform, Text} from 'react-native';
 import Colors from '../constants/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -20,10 +19,6 @@ import RegionListScreen, {
 import StatisticsScreen, {
   screenOptions as StatisticsScreenOptions,
 } from '../screens/game/StatisticsScreen';
-
-const defaultNavOptions = {
-  headerShown: false,
-};
 
 const StudyStackNavigator = createNativeStackNavigator();
 
@@ -87,11 +82,11 @@ export const GeographicalTabNavigator = () => {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: Colors.twitchBottom,
-        },  
+        },
         tabBarLabelStyle: {
           fontSize: 15,
           fontFamily: 'Yrsa-Bold',
-        }  
+        },
       })}>
       <GeographicalBottomTabNavigator.Screen
         name="Study"

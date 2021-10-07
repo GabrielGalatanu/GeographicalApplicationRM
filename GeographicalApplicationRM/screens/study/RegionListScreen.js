@@ -23,7 +23,7 @@ const RegionListScreen = props => {
       colors={[Colors.twitchGradientStart, Colors.twitchGradientEnd]}
       style={styles.screen}>
       <MenuButton label="Africa" onPress={navigateToCountriesListScreen} />
-      <MenuButton label="America" onPress={navigateToCountriesListScreen} />
+      <MenuButton label="Americas" onPress={navigateToCountriesListScreen} />
       <MenuButton label="Asia" onPress={navigateToCountriesListScreen} />
       <MenuButton label="Europe" onPress={navigateToCountriesListScreen} />
       <MenuButton label="Oceania" onPress={navigateToCountriesListScreen} />
