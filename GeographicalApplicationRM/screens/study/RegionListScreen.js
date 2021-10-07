@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-
 import {StyleSheet} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -8,12 +7,6 @@ import Colors from 'constants/Colors';
 import MenuButton from 'components/MenuButton';
 
 const RegionListScreen = props => {
-  useEffect(() => {
-    // (async () => {
-    //   setCountries(await getCountryAPI('romania'));
-    // })();
-  }, []);
-
   const navigateToCountriesListScreen = region => {
     props.navigation.navigate('CountriesListScreen', {region: region});
   };

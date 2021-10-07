@@ -11,10 +11,10 @@ const StatisticsScreen = () => {
 };
 
 export const screenOptions = () => {
-    return {
-      headerTitle: 'Statistics!',
-    };
+  return {
+    headerTitle: 'Statistics!',
   };
+};
 
 const styles = StyleSheet.create({
   container: {

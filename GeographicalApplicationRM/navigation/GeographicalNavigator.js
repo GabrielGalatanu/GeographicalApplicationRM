@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Colors from '../constants/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
@@ -19,6 +18,13 @@ import RegionListScreen, {
 import StatisticsScreen, {
   screenOptions as StatisticsScreenOptions,
 } from '../screens/game/StatisticsScreen';
+
+import Colors from 'constants/Colors';
+import 'types/index';
+
+/**
+ * @type {CreateNativeStackNavigatorResult<StudyStackParamList>}
+ */
 
 const StudyStackNavigator = createNativeStackNavigator();
 
@@ -44,6 +50,10 @@ export const StudyNavigator = () => {
   );
 };
 
+/**
+ * @type {CreateNativeStackNavigatorResult<GameStackParamList>}
+ */
+
 const GameStackNavigator = createNativeStackNavigator();
 
 export const GameNavigator = () => {
@@ -57,6 +67,10 @@ export const GameNavigator = () => {
     </GameStackNavigator.Navigator>
   );
 };
+
+/**
+ * @type {CreateBottomTabNavigatorType<BottomTabBarParamList>}
+ */
 
 const GeographicalBottomTabNavigator = createBottomTabNavigator();
 

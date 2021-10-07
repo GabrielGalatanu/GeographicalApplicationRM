@@ -1,31 +1,14 @@
 import React from 'react';
-
-import {StyleSheet, Text, View} from 'react-native';
-
-
-import { GeographicalTabNavigator } from './navigation/GeographicalNavigator';
 import {NavigationContainer} from '@react-navigation/native';
 
+import {GeographicalTabNavigator} from './navigation/GeographicalNavigator';
 
 const App = () => {
   return (
     <NavigationContainer>
-
-      <GeographicalTabNavigator/>
-
+      <GeographicalTabNavigator />
     </NavigationContainer>
   );
 };
-{/* <View style={styles.container}>
-
-<Text>Abecedar</Text>
-</View> */}
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default App;

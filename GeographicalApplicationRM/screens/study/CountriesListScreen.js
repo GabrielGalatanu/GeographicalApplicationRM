@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-
 import {
   StyleSheet,
   FlatList,
@@ -7,13 +6,17 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import Colors from '../../constants/Colors';
 
 import LinearGradient from 'react-native-linear-gradient';
-import {getAllCountriesByRegionAPI} from '../../http/restcountries';
 
-import CountryButton from '../../components/CountryButton';
+import {getAllCountriesByRegionAPI} from 'http/restcountries';
+import CountryButton from 'components/CountryButton';
+import Colors from 'constants/Colors';
 import 'types/index.js';
+
+/**
+ * @param {CountriesListScreenProps} props
+ */
 
 const CountriesListScreen = props => {
   /**

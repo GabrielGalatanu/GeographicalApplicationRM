@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-import Colors from '../constants/Colors';
+import Colors from 'constants/Colors';
 
 export default function CountryButton({alpha2Code, country, onPress}) {
   let countryFlagUrl =
