@@ -7,7 +7,7 @@ const restCountriesBaseUrl = 'https://restcountries.com/v2';
  *
  * @param {string} country - Country name.
  * @param {Function} ifError - A function to run in case of an error.
- * @returns {Promise<CountryArrayAPI[]>}
+ * @returns {Promise<CountryDTOData[]>}
  */
 export const getCountryAPI = async (country, ifError) => {
   try {
@@ -39,22 +39,18 @@ export const getAllCountriesByRegionAPI = async region => {
 
     if (json.length === undefined) {
       promiseType = 'CountryFetchFailed';
+      return {data: {promiseType: promiseType, json: json}};
     } else if (json.length > 0) {
       promiseType = 'CountryDTO';
+      return {data: {promiseType: promiseType, json: json}};
     }
-
-    let data = {data: {promiseType: promiseType, json: json}};
-
-    return data;
   } catch (error) {
-    let data = {
+    return {
       data: {
         promiseType: 'CountryFetchError',
         json: {message: error.message},
       },
     };
-
-    return data;
   }
 };
 
@@ -63,15 +59,11 @@ export const getAllRegionsAPI = async () => {
     const response = await fetch(`${restCountriesBaseUrl}/all`);
     const json = await response.json();
 
-    let regionArray = [];
-    json.forEach(country => {
-      regionArray.push(country.region);
-    });
-
     let uniqueRegionArray = [];
-    regionArray.forEach(c => {
-      if (!uniqueRegionArray.includes(c)) {
-        uniqueRegionArray.push(c);
+
+    json.forEach(country => {
+      if (!uniqueRegionArray.includes(country.region)) {
+        uniqueRegionArray.push(country.region);
       }
     });
 

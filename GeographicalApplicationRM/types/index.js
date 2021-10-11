@@ -22,6 +22,26 @@
  */
 
 /**
+ * @typedef Country
+ * @property {string} name
+ * @property {string} alpha2Code
+ * @property {string} flagURL
+ * @property {string} capital
+ * @property {number} population
+ * @property {number} area
+ * @property {string} currency
+ */
+
+/**
+ * @typedef {React.Dispatch<React.SetStateAction<Country>>} CountryStateSetter — Sets the value for a country.
+ */
+
+/**
+ * @typedef {React.Dispatch<React.SetStateAction<CountryDTOData[]>>} CountriesStateSetter — Sets the value for countries.
+ */
+
+//https errors:
+/**
  * @typedef CountryDTO
  * @property {{promiseType: 'CountryDTO', json: CountryDTOData[]}} data
  */
@@ -45,24 +65,7 @@
  * @property {{promiseType: ('CountryFetchError'), json: CountryFetchErrorData}} data
  */
 
-// /**
-//  * @typedef {{route: {params: {region: string}}, navigation: {navigate: Function}}} CountriesListScreenProps
-//  */
-
-/**
- * @typedef Country
- * @property {string} name
- * @property {string} alpha2Code
- * @property {string} flagURL
- * @property {string} capital
- * @property {number} population
- * @property {number} area
- * @property {string} currency
- */
-
-/**
- * @typedef {React.Dispatch<React.SetStateAction<Country>>} CountriesStateSetter — Sets the value for countries.
- */
+//https errors//
 
 //Navigation:
 /**
@@ -93,7 +96,7 @@
  */
 
 /**
- * @typedef {import('@react-navigation/native-stack').NativeStackScreenProps<StudyStackParamList, 'CountriesListSceen'>} CountriesListScreenProps
+ * @typedef {import('@react-navigation/native-stack').NativeStackScreenProps<StudyStackParamList, 'CountriesListScreen'>} CountriesListScreenProps
  */
 //Screen navigation//
 

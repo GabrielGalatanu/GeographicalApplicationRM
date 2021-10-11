@@ -9,7 +9,7 @@ import {
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import {getAllCountriesByRegionAPI, getCountryAPI} from 'http/restcountries';
+import {getAllCountriesByRegionAPI} from 'http/restcountries';
 import CountryButton from 'components/CountryButton';
 import Themes from 'constants/Themes';
 import 'types/index.js';
@@ -27,17 +27,9 @@ const CountriesListScreen = props => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const data = await fetchDataFromAPI();
-  //     console.log(data);
-  //   })();
-  // }, [fetchDataFromAPI]);
-
   const fetchDataFromAPI = useCallback(async () => {
     setIsLoading(true);
     let countriesData = await getAllCountriesByRegionAPI(route.params.region);
-
     if (fetchDataFromAPIErrorCheck(countriesData)) {
       dataFailedToLoad();
     } else {

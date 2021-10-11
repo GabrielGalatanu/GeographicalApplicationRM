@@ -20,7 +20,7 @@ import 'types/index';
 const CountryDetailsScreen = props => {
   const {route} = props;
   /**
-   * @type {[Country, CountriesStateSetter]} Country
+   * @type {[Country, CountryStateSetter]} Country
    */
   const [country, setCountry] = useState();
   const [isLoading, setIsLoading] = useState(true);

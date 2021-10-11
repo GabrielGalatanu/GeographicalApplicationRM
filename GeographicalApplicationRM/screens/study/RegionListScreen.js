@@ -26,6 +26,7 @@ const RegionListScreen = props => {
 
   const navigateToCountriesListScreen = region => {
     props.navigation.navigate('CountriesListScreen', {region: region});
+    //  props.navigation.navigate('CountriesListScreen', {region: e})
   };
 
   return (
@@ -44,6 +45,7 @@ const RegionListScreen = props => {
       {regionArray.map(region => {
         return (
           <MenuButton
+            key={region}
             buttonCount={regionArray.length}
             label={region}
             onPress={() => navigateToCountriesListScreen(region)}
