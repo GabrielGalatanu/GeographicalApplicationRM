@@ -19,7 +19,7 @@ import StatisticsScreen, {
   screenOptions as StatisticsScreenOptions,
 } from '../screens/game/StatisticsScreen';
 
-import Colors from 'constants/Colors';
+import Themes from 'constants/Themes';
 import 'types/index';
 
 /**
@@ -95,7 +95,7 @@ export const GeographicalTabNavigator = () => {
         tabBarInactiveTintColor: 'gray',
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: Colors.twitchBottom,
+          backgroundColor: Themes.colors.twitchBottom,
         },
         tabBarLabelStyle: {
           fontSize: 15,

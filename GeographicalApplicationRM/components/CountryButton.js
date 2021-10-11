@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-import Colors from 'constants/Colors';
+import Themes from 'constants/Themes';
 
 export default function CountryButton({alpha2Code, country, onPress}) {
   let countryFlagUrl =
@@ -35,11 +35,6 @@ export default function CountryButton({alpha2Code, country, onPress}) {
   );
 }
 
-const borderRadiusValue = 5;
-const borderWidthValue = 5;
-const borderColorValue = Colors.twitchHeader;
-const backgroundColor = Colors.twitchGradientStart;
-
 const styles = StyleSheet.create({
   button: {},
   parent: {
@@ -51,23 +46,23 @@ const styles = StyleSheet.create({
   },
   narrow: {
     flex: 1,
-    backgroundColor: backgroundColor,
-    borderWidth: borderWidthValue,
+    backgroundColor: Themes.colors.twitchGradientStart,
+    borderWidth: Themes.borders.widthValue,
     borderRightWidth: 0,
-    borderTopLeftRadius: borderRadiusValue,
-    borderBottomLeftRadius: borderRadiusValue,
-    borderColor: borderColorValue,
+    borderTopLeftRadius: Themes.borders.radiusValue,
+    borderBottomLeftRadius: Themes.borders.radiusValue,
+    borderColor: Themes.colors.twitchHeader,
     justifyContent: 'center',
     alignItems: 'center',
   },
   wide: {
     flex: 2,
-    backgroundColor: backgroundColor,
-    borderWidth: borderWidthValue,
+    backgroundColor: Themes.colors.twitchGradientStart,
+    borderWidth: Themes.borders.widthValue,
     borderLeftWidth: 0,
-    borderTopRightRadius: borderRadiusValue,
-    borderBottomRightRadius: borderRadiusValue,
-    borderColor: borderColorValue,
+    borderTopRightRadius: Themes.borders.radiusValue,
+    borderBottomRightRadius: Themes.borders.radiusValue,
+    borderColor: Themes.colors.twitchHeader,
     justifyContent: 'center',
     alignItems: 'flex-start',
   },

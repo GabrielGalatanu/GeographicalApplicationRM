@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   StyleSheet,
   FlatList,
@@ -9,9 +9,9 @@ import {
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import {getAllCountriesByRegionAPI} from 'http/restcountries';
+import {getAllCountriesByRegionAPI, getCountryAPI} from 'http/restcountries';
 import CountryButton from 'components/CountryButton';
-import Colors from 'constants/Colors';
+import Themes from 'constants/Themes';
 import 'types/index.js';
 
 /**
@@ -19,31 +19,66 @@ import 'types/index.js';
  */
 
 const CountriesListScreen = props => {
+  const {route, navigation} = props;
   /**
-   * @type {[CountryArrayAPI[], CountriesStateSetter]} Loading
+   * @type {[CountryDTOData[], CountriesStateSetter]} Countries
    */
   const [countries, setCountries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
-  useEffect(() => {
-    fetchDataFromAPI();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const data = await fetchDataFromAPI();
+  //     console.log(data);
+  //   })();
+  // }, [fetchDataFromAPI]);
 
-  const fetchDataFromAPI = () => {
-    (async () => {
-      setIsLoading(true);
-      setCountries(
-        await getAllCountriesByRegionAPI(
-          props.route.params.region,
-          dataFailedToLoad,
-        ),
-      );
-      setIsLoading(false);
-    })();
+  const fetchDataFromAPI = useCallback(async () => {
+    setIsLoading(true);
+    let countriesData = await getAllCountriesByRegionAPI(route.params.region);
+
+    if (fetchDataFromAPIErrorCheck(countriesData)) {
+      dataFailedToLoad();
+    } else {
+      if (countriesData.data.promiseType === 'CountryDTO') {
+        setCountries(countriesData.data.json);
+        setIsLoading(false);
+      }
+    }
+  }, [route.params.region]);
+
+  /**
+   * @param {CountryFetchFailed|CountryDTO|CountryFetchError} countriesData
+   */
+  const fetchDataFromAPIErrorCheck = countriesData => {
+    let ifError = false;
+
+    switch (countriesData.data.promiseType) {
+      case 'CountryFetchError':
+        if (countriesData.data.json.message === 'Network request failed') {
+          ifError = true;
+        }
+        break;
+      case 'CountryFetchFailed':
+        if (countriesData.data.json.status === 404) {
+          ifError = true;
+        }
+        break;
+      default:
+        ifError = false;
+        break;
+    }
+
+    return ifError;
   };
 
+  useEffect(() => {
+    fetchDataFromAPI();
+  }, [fetchDataFromAPI]);
+
   const dataFailedToLoad = () => {
+    setIsLoading(false);
     setIsError(true);
   };
 
@@ -53,14 +88,12 @@ const CountriesListScreen = props => {
   };
 
   const navigateToCountryDetailScreen = country => {
-    props.navigation.navigate('CountryDetailScreen', {country: country});
+    navigation.navigate('CountryDetailScreen', {country: country});
   };
 
-  if (isError) {
+  const isErrorJSXFragment = () => {
     return (
-      <LinearGradient
-        colors={[Colors.twitchGradientStart, Colors.twitchGradientEnd]}
-        style={styles.screen}>
+      <>
         <Text style={styles.errorText}>Data failed to load!</Text>
         <TouchableOpacity
           style={styles.errorButton}
@@ -69,37 +102,47 @@ const CountriesListScreen = props => {
           }}>
           <Text style={styles.errorButtonText}>Reload?</Text>
         </TouchableOpacity>
-      </LinearGradient>
+      </>
     );
-  }
+  };
 
-  if (isLoading) {
+  const isLoadingJSXFragment = () => {
     return (
-      <LinearGradient
-        colors={[Colors.twitchGradientStart, Colors.twitchGradientEnd]}
-        style={styles.screen}>
-        <ActivityIndicator size="large" color={Colors.twitchHeader} />
-      </LinearGradient>
+      <>
+        <ActivityIndicator size="large" color={Themes.colors.twitchHeader} />
+      </>
     );
-  }
+  };
 
+  const mainJSXFragment = () => {
+    return (
+      <>
+        <FlatList
+          data={countries}
+          renderItem={({item}) => {
+            return (
+              <CountryButton
+                alpha2Code={item.alpha2Code}
+                country={item.name}
+                onPress={navigateToCountryDetailScreen}
+              />
+            );
+          }}
+          keyExtractor={item => item.name}
+        />
+      </>
+    );
+  };
   return (
     <LinearGradient
-      colors={[Colors.twitchGradientStart, Colors.twitchGradientEnd]}
+      colors={[
+        Themes.colors.twitchGradientStart,
+        Themes.colors.twitchGradientEnd,
+      ]}
       style={styles.screen}>
-      <FlatList
-        data={countries}
-        renderItem={({item}) => {
-          return (
-            <CountryButton
-              alpha2Code={item.alpha2Code}
-              country={item.name}
-              onPress={navigateToCountryDetailScreen}
-            />
-          );
-        }}
-        keyExtractor={item => item.name}
-      />
+      {isError && isErrorJSXFragment()}
+      {isLoading && !isError && isLoadingJSXFragment()}
+      {!isLoading && !isError && mainJSXFragment()}
     </LinearGradient>
   );
 };
@@ -109,7 +152,7 @@ export const screenOptions = () => {
     headerTitle: 'Countries List!',
     headerTintColor: 'white',
     headerStyle: {
-      backgroundColor: Colors.twitchHeader,
+      backgroundColor: Themes.colors.twitchHeader,
     },
     headerTitleStyle: {
       fontFamily: 'Yrsa-Bold',
@@ -133,7 +176,7 @@ const styles = StyleSheet.create({
   errorButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.twitchBottom,
+    backgroundColor: Themes.colors.twitchBottom,
     height: 40,
     width: '25%',
     borderRadius: 10,

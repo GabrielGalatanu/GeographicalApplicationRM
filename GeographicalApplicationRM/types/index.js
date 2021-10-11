@@ -7,25 +7,61 @@
  */
 
 /**
- * @typedef CountryArrayAPI
+ * @typedef CountryDTOData
  * @property {string} name - Name of the country.
  * @property {string} alpha2Code
  * @property {string} alpha3Code
  * @property {string} capital
  * @property {string} region
- * @property {string} population
- * @property {string} area
+ * @property {number} population
+ * @property {number} area
  * @property {string} timezones
  * @property {string} borderRadius
+ * @property {{png: string}} flags
  * @property {CountryCurrencies[]} currencies
  */
 
 /**
- * @typedef {Function} CountriesStateSetter — Sets the value for countries.
+ * @typedef CountryDTO
+ * @property {{promiseType: 'CountryDTO', json: CountryDTOData[]}} data
  */
 
 /**
- * @typedef {{route: {params: {region: string}}}} CountriesListScreenProps
+ * @typedef CountryFetchFailedData
+ * @property {string} message
+ * @property {number} status
+ */
+/**
+ * @typedef CountryFetchFailed
+ * @property {{promiseType: ('CountryFetchFailed'), json: CountryFetchFailedData}} data
+ */
+
+/**
+ * @typedef CountryFetchErrorData
+ * @property {string} message
+ */
+/**
+ * @typedef CountryFetchError
+ * @property {{promiseType: ('CountryFetchError'), json: CountryFetchErrorData}} data
+ */
+
+/**
+ * @typedef {React.Dispatch<React.SetStateAction<CountryDTOData[]>>} CountriesStateSetter — Sets the value for countries.
+ */
+
+/**
+ * @typedef {{route: {params: {region: string}}, navigation: {navigate: Function}}} CountriesListScreenProps
+ */
+
+/**
+ * @typedef Country
+ * @property {string} name
+ * @property {string} alpha2Code
+ * @property {string} flagURL
+ * @property {string} capital
+ * @property {number} population
+ * @property {number} area
+ * @property {string} currency
  */
 
 //Navigation:
