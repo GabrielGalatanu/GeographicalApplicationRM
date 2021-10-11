@@ -45,10 +45,6 @@
  * @property {{promiseType: ('CountryFetchError'), json: CountryFetchErrorData}} data
  */
 
-/**
- * @typedef {React.Dispatch<React.SetStateAction<CountryDTOData[]>>} CountriesStateSetter — Sets the value for countries.
- */
-
 // /**
 //  * @typedef {{route: {params: {region: string}}, navigation: {navigate: Function}}} CountriesListScreenProps
 //  */
@@ -62,6 +58,10 @@
  * @property {number} population
  * @property {number} area
  * @property {string} currency
+ */
+
+/**
+ * @typedef {React.Dispatch<React.SetStateAction<Country>>} CountriesStateSetter — Sets the value for countries.
  */
 
 //Navigation:

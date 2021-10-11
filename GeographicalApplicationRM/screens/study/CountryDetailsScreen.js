@@ -26,6 +26,13 @@ const CountryDetailsScreen = props => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
+  //TEMP testing:
+  useEffect(() => {
+    console.log(country);
+  }, [country]);
+
+  //TEMP tesing//
+
   const fetchDataFromAPI = useCallback(() => {
     (async () => {
       setIsLoading(true);
@@ -91,14 +98,72 @@ const CountryDetailsScreen = props => {
     return (
       <>
         <ScrollView>
-          <View style={styles.flagContainer}>
-            <Image
-              style={styles.flag}
-              resizeMode={'cover'}
-              source={{
-                uri: country.flagURL,
-              }}
-            />
+          <View style={styles.screen}>
+            <View style={styles.flagContainer}>
+              <Image
+                style={styles.flag}
+                resizeMode={'cover'}
+                source={{
+                  uri: country.flagURL,
+                }}
+              />
+            </View>
+
+            <View style={styles.countryNameContainer}>
+              <Text style={styles.countryNameText}>
+                {country.name}({country.alpha2Code})
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.detailsLineContainer}>
+            <View style={styles.detailsLine} />
+            <View>
+              <Text style={styles.detailsLineText}>Details</Text>
+            </View>
+            <View style={styles.detailsLine} />
+          </View>
+
+          <View style={styles.detailsContainer}>
+            <Text style={styles.countryNameText}>
+              Capital: {country.capital}
+            </Text>
+
+            <View style={styles.separationLineContainer}>
+              <View style={styles.separationLine} />
+            </View>
+
+            <Text style={styles.countryNameText}>
+              Population: {country.population}
+            </Text>
+
+            <View style={styles.separationLineContainer}>
+              <View style={styles.separationLine} />
+            </View>
+
+            <Text style={styles.countryNameText}>Area: {country.area} Km²</Text>
+
+            <View style={styles.separationLineContainer}>
+              <View style={styles.separationLine} />
+            </View>
+
+            <View style={styles.countryTimeContainer}>
+              <Text style={styles.countryNameText}>Local Time: To do !!!</Text>
+            </View>
+
+            <View style={styles.separationLineContainer}>
+              <View style={styles.separationLine} />
+            </View>
+
+            <Text style={styles.countryNameText}>Currency: To do !!!</Text>
+
+            <View style={styles.detailsLineContainer}>
+              <View style={styles.detailsLine} />
+              <View>
+                <Text style={styles.detailsLineText}>Neighbours</Text>
+              </View>
+              <View style={styles.detailsLine} />
+            </View>
           </View>
         </ScrollView>
       </>
@@ -170,6 +235,62 @@ const styles = StyleSheet.create({
     color: 'white',
     letterSpacing: 1,
     fontFamily: 'Yrsa-Bold',
+  },
+  countryNameContainer: {
+    marginTop: 5,
+    width: (Dimensions.get('window').width * 90) / 100,
+    height: (Dimensions.get('window').width * 10) / 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  countryNameText: {
+    color: 'white',
+    fontSize: 25,
+    textAlign: 'center',
+    marginTop: 5,
+    marginBottom: 5,
+    fontFamily: 'Yrsa-Bold',
+  },
+  detailsLineContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  detailsLine: {
+    flex: 1,
+    height: 2,
+    backgroundColor: 'white',
+    marginBottom: 10,
+    marginTop: 5,
+  },
+  detailsLineText: {
+    width: 120,
+    textAlign: 'center',
+    color: 'white',
+    fontFamily: 'Yrsa-Bold',
+    fontSize: 20,
+  },
+  detailsContainer: {
+    marginTop: 50,
+    width: (Dimensions.get('window').width * 95) / 100,
+    height: (Dimensions.get('window').width * 50) / 100,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  separationLineContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  separationLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: 'white',
+  },
+  countryTimeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 
