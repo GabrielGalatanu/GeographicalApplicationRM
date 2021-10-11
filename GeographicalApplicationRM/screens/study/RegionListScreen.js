@@ -7,6 +7,13 @@ import Themes from 'constants/Themes';
 import MenuButton from 'components/MenuButton';
 import {getAllRegionsAPI} from 'http/restcountries';
 
+import 'types/index';
+
+/**
+ *
+ * @param {RegionListScreenProps} props
+ */
+
 const RegionListScreen = props => {
   const [regionArray, setRegionArray] = useState([]);
 

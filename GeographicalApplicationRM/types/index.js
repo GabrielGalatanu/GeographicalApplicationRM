@@ -49,9 +49,9 @@
  * @typedef {React.Dispatch<React.SetStateAction<CountryDTOData[]>>} CountriesStateSetter — Sets the value for countries.
  */
 
-/**
- * @typedef {{route: {params: {region: string}}, navigation: {navigate: Function}}} CountriesListScreenProps
- */
+// /**
+//  * @typedef {{route: {params: {region: string}}, navigation: {navigate: Function}}} CountriesListScreenProps
+//  */
 
 /**
  * @typedef Country
@@ -66,7 +66,7 @@
 
 //Navigation:
 /**
- * @typedef {{RegionListScreen: undefined, CountriesListScreen: undefined, CountryDetailScreen: undefined }} StudyStackParamList
+ * @typedef {{RegionListScreen: undefined, CountriesListScreen: {region: string}, CountryDetailScreen: {country: string} }} StudyStackParamList
  */
 
 /**
@@ -86,5 +86,15 @@
  * @template T
  * @typedef {import("@react-navigation/native").TypedNavigator<T, import("@react-navigation/native").TabNavigationState<import("@react-navigation/native").ParamListBase>, import('@react-navigation/bottom-tabs').BottomTabNavigationOptions, import('@react-navigation/bottom-tabs/lib/typescript/src/types').BottomTabNavigationEventMap, ({ initialRouteName, backBehavior, children, screenListeners, screenOptions, sceneContainerStyle, lazy, tabBarOptions, ...rest }: import('@react-navigation/core').DefaultNavigatorOptions<import('@react-navigation/routers').ParamListBase, import('@react-navigation/routers').TabNavigationState<import('@react-navigation/routers').ParamListBase>, import('@react-navigation/bottom-tabs').BottomTabNavigationOptions, import('@react-navigation/bottom-tabs/lib/typescript/src/types').BottomTabNavigationEventMap> & import('@react-navigation/routers').TabRouterOptions & import('@react-navigation/bottom-tabs/lib/typescript/src/types').BottomTabNavigationConfig)=> JSX.Element>} CreateBottomTabNavigatorType
  */
+
+//Screen navigation:
+/**
+ * @typedef {import('@react-navigation/native-stack').NativeStackScreenProps<StudyStackParamList, 'RegionListScreen'>} RegionListScreenProps
+ */
+
+/**
+ * @typedef {import('@react-navigation/native-stack').NativeStackScreenProps<StudyStackParamList, 'CountriesListSceen'>} CountriesListScreenProps
+ */
+//Screen navigation//
 
 //Navigation//
