@@ -11,8 +11,10 @@ import {
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
+import * as RNLocalize from 'react-native-localize';
 
 import {getCountryAPI} from 'http/restcountries';
+import ApiAccessKeyExchangeRateAPI from 'constants/ApiAccessKeyExchangeRateAPI';
 import Themes from 'constants/Themes';
 import Country from 'models/country';
 import 'types/index';
@@ -26,6 +28,7 @@ const CountryDetailsScreen = props => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [localTime, setLocalTime] = useState('');
+  const [currenciesValues, setCurrenciesValues] = useState('');
 
   //Time counter:
   let countryTimeIntervalCounter;
@@ -33,6 +36,21 @@ const CountryDetailsScreen = props => {
   useEffect(() => {
     if (country !== undefined) {
       setLocalTime(country.getLocalTime());
+
+      //Comment this because you have a limited amount of requests:
+      (async () => {
+        try {
+          setCurrenciesValues(
+            await country.getCurrenciesValueComparison(
+              RNLocalize.getCurrencies()[0],
+              country.currency,
+            ),
+          );
+        } catch (err) {
+          console.log('erroare async: ' + err.message);
+        }
+      })();
+      //Comment this because you have a limited amount of requests//
 
       countryTimeIntervalCounter = setInterval(() => timeCounter(), 1000);
 
@@ -174,7 +192,9 @@ const CountryDetailsScreen = props => {
               <View style={styles.separationLine} />
             </View>
 
-            <Text style={styles.countryNameText}>Currency: To do !!!</Text>
+            <Text style={styles.countryNameText}>
+              Currency: {country !== undefined && currenciesValues}
+            </Text>
 
             <View style={styles.detailsLineContainer}>
               <View style={styles.detailsLine} />

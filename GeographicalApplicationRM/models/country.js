@@ -1,4 +1,5 @@
-import moment, {utc} from 'moment';
+import moment from 'moment';
+import {getExchangeRateApiAsync} from 'http/exchangeratesapi';
 /**
  * Class representing a country.
  */
@@ -76,6 +77,27 @@ class Country {
 
     return momentTime;
   }
+
+  /**
+   *  Method that takes two currencies (ex: getCurrenciesValueComparison('EUR','RON')) and returns a string that displays how much one currency is valued based on the other.
+   *
+   * @param {string} deviceCurrency
+   * @param {string} selectedCountryCurrency
+   * @returns {Promise<string>} A string that displays the value difference between the two currencies.
+   */
+  getCurrenciesValueComparison = async (
+    deviceCurrency,
+    selectedCountryCurrency,
+  ) => {
+    try {
+      return await getExchangeRateApiAsync(
+        deviceCurrency,
+        selectedCountryCurrency,
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 }
 
 export default Country;
