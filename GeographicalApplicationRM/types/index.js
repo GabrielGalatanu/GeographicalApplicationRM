@@ -30,6 +30,7 @@
  * @property {number} population
  * @property {number} area
  * @property {string} currency
+ * @property {string} timezones
  */
 
 /**

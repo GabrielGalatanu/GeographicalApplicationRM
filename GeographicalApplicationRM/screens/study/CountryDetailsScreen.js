@@ -25,13 +25,29 @@ const CountryDetailsScreen = props => {
   const [country, setCountry] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [localTime, setLocalTime] = useState('');
 
-  //TEMP testing:
+  //Time counter:
+  let countryTimeIntervalCounter;
+
   useEffect(() => {
-    console.log(country);
+    if (country !== undefined) {
+      setLocalTime(country.getLocalTime());
+
+      countryTimeIntervalCounter = setInterval(() => timeCounter(), 1000);
+
+      return () => {
+        clearInterval(countryTimeIntervalCounter);
+      };
+    }
   }, [country]);
 
-  //TEMP tesing//
+  const timeCounter = () => {
+    if (country !== undefined) {
+      setLocalTime(country.getLocalTime());
+    }
+  };
+  //Time counter//
 
   const fetchDataFromAPI = useCallback(() => {
     (async () => {
@@ -50,6 +66,7 @@ const CountryDetailsScreen = props => {
         response[0].population,
         response[0].area,
         response[0].currencies[0].code,
+        response[0].timezones,
       );
 
       setCountry(CountryInfo);
@@ -148,7 +165,9 @@ const CountryDetailsScreen = props => {
             </View>
 
             <View style={styles.countryTimeContainer}>
-              <Text style={styles.countryNameText}>Local Time: To do !!!</Text>
+              <Text style={styles.countryNameText}>
+                Local Time: {localTime}
+              </Text>
             </View>
 
             <View style={styles.separationLineContainer}>

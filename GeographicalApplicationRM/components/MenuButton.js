@@ -3,6 +3,12 @@ import {Text, StyleSheet, TouchableOpacity, Button} from 'react-native';
 
 import Colors from 'constants/Colors';
 
+/**
+ *
+ * @param {{buttonCount: number, label: string, onPress: Function}} props
+ * @returns
+ */
+
 const MenuButton = props => {
   const [buttonHeight, setButtonHeight] = useState('10%');
 
