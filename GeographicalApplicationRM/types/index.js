@@ -33,6 +33,11 @@
  */
 
 /**
+ * @typedef RegionDTOData
+ * @property {string} region
+ */
+
+/**
  * @typedef {React.Dispatch<React.SetStateAction<Country>>} CountryStateSetter — Sets the value for a country.
  */
 
@@ -41,6 +46,8 @@
  */
 
 //https errors:
+
+// typization for getAllCountriesByRegionAPI:
 /**
  * @typedef CountryDTO
  * @property {{promiseType: 'CountryDTO', json: CountryDTOData[]}} data
@@ -63,6 +70,29 @@
 /**
  * @typedef CountryFetchError
  * @property {{promiseType: ('CountryFetchError'), json: CountryFetchErrorData}} data
+ */
+
+// typization for getAllRegionsAPI:
+/**
+ * @typedef RegionDTO
+ * @property {{promiseType: 'RegionDTO', json: RegionDTOData[]}} data
+ */
+
+/**
+ * @typedef RegionFetchFailedData
+ * @property {string} message
+ */
+/**
+ * @typedef RegionFetchFailed
+ * @property {{promiseType: ('RegionFetchFailed'), json: RegionFetchFailedData}} data
+
+/**
+ * @typedef RegionFetchFailedError
+ * @property {string} message
+ */
+/**
+ * @typedef RegionFetchError
+ * @property {{promiseType: ('RegionFetchError'), json: RegionFetchFailedError}} data
  */
 
 //https errors//

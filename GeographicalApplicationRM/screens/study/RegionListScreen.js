@@ -1,5 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {
+  StyleSheet,
+  Text,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -16,17 +21,101 @@ import 'types/index';
 
 const RegionListScreen = props => {
   const [regionArray, setRegionArray] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
+  const fetchDataFromAPI = useCallback(async () => {
+    setIsLoading(true);
+
+    let response = await getAllRegionsAPI();
+    console.log(response.data);
+    if (fetchDataFromAPIErrorCheck(response)) {
+      dataFailedToLoad();
+    } else {
+      if (response.data.promiseType === 'RegionDTO') {
+        setRegionArray(response.data.json);
+        setIsLoading(false);
+      }
+    }
+  }, []);
 
   useEffect(() => {
-    (async () => {
-      let response = await getAllRegionsAPI();
-      setRegionArray(response);
-    })();
-  }, []);
+    fetchDataFromAPI();
+  }, [fetchDataFromAPI]);
+
+  /**
+   * @param {RegionFetchFailed|RegionDTO|RegionFetchError} regionData
+   */
+  const fetchDataFromAPIErrorCheck = regionData => {
+    let ifError = false;
+
+    switch (regionData.data.promiseType) {
+      case 'RegionFetchError':
+        ifError = true;
+        break;
+      case 'RegionFetchFailed':
+        ifError = true;
+        break;
+      default:
+        ifError = false;
+        break;
+    }
+
+    return ifError;
+  };
+
+  const dataFailedToLoad = () => {
+    setIsLoading(false);
+    setIsError(true);
+  };
+
+  const reloadButtonHandler = () => {
+    setIsError(false);
+    fetchDataFromAPI();
+  };
 
   const navigateToCountriesListScreen = region => {
     props.navigation.navigate('CountriesListScreen', {region: region});
-    //  props.navigation.navigate('CountriesListScreen', {region: e})
+  };
+
+  const isErrorJSXFragment = () => {
+    return (
+      <>
+        <Text style={styles.errorText}>Data failed to load!</Text>
+        <TouchableOpacity
+          style={styles.errorButton}
+          onPress={() => {
+            reloadButtonHandler();
+          }}>
+          <Text style={styles.errorButtonText}>Reload?</Text>
+        </TouchableOpacity>
+      </>
+    );
+  };
+
+  const isLoadingJSXFragment = () => {
+    return (
+      <>
+        <ActivityIndicator size="large" color={Themes.colors.twitchHeader} />
+      </>
+    );
+  };
+
+  const mainJSXFragment = () => {
+    return (
+      <>
+        {regionArray.map(region => {
+          return (
+            <MenuButton
+              key={region}
+              buttonCount={regionArray.length}
+              label={region}
+              onPress={() => navigateToCountriesListScreen(region)}
+            />
+          );
+        })}
+      </>
+    );
   };
 
   return (
@@ -36,22 +125,9 @@ const RegionListScreen = props => {
         Themes.colors.twitchGradientEnd,
       ]}
       style={styles.screen}>
-      {/* <MenuButton label="Africa" onPress={navigateToCountriesListScreen} />
-      <MenuButton label="Americas" onPress={navigateToCountriesListScreen} />
-      <MenuButton label="Asia" onPress={navigateToCountriesListScreen} />
-      <MenuButton label="Europe" onPress={navigateToCountriesListScreen} />
-      <MenuButton label="Oceania" onPress={navigateToCountriesListScreen} /> */}
-
-      {regionArray.map(region => {
-        return (
-          <MenuButton
-            key={region}
-            buttonCount={regionArray.length}
-            label={region}
-            onPress={() => navigateToCountriesListScreen(region)}
-          />
-        );
-      })}
+      {isError && isErrorJSXFragment()}
+      {isLoading && !isError && isLoadingJSXFragment()}
+      {!isLoading && !isError && mainJSXFragment()}
     </LinearGradient>
   );
 };
@@ -75,6 +151,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  errorText: {
+    fontSize: 25,
+    color: 'white',
+    letterSpacing: 1,
+    fontFamily: 'Yrsa-Bold',
+  },
+  errorButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Themes.colors.twitchBottom,
+    height: 40,
+    width: '25%',
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  errorButtonText: {
+    fontSize: 20,
+    color: 'white',
+    letterSpacing: 1,
+    fontFamily: 'Yrsa-Bold',
   },
 });
 

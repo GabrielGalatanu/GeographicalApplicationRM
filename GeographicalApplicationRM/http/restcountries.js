@@ -54,21 +54,43 @@ export const getAllCountriesByRegionAPI = async region => {
   }
 };
 
+/**
+ * @returns {Promise<RegionFetchFailed|RegionDTO|RegionFetchError>}
+ */
+
 export const getAllRegionsAPI = async () => {
   try {
     const response = await fetch(`${restCountriesBaseUrl}/all`);
     const json = await response.json();
 
-    let uniqueRegionArray = [];
+    /**
+     * @type {('RegionDTO'|'RegionFetchFailed')}
+     */
+    let promiseType;
 
-    json.forEach(country => {
-      if (!uniqueRegionArray.includes(country.region)) {
-        uniqueRegionArray.push(country.region);
-      }
-    });
+    if (json.length === undefined) {
+      promiseType = 'RegionFetchFailed';
+      return {data: {promiseType: promiseType, json: json.message}};
+    } else if (json.length > 0) {
+      promiseType = 'RegionDTO';
 
-    return uniqueRegionArray.sort();
+      let uniqueRegionArray = [];
+
+      json.forEach(country => {
+        if (!uniqueRegionArray.includes(country.region)) {
+          uniqueRegionArray.push(country.region);
+        }
+      });
+
+      return {data: {promiseType: promiseType, json: uniqueRegionArray}};
+    }
   } catch (error) {
-    return error;
+    console.log(error);
+    return {
+      data: {
+        promiseType: 'RegionFetchError',
+        json: {message: error.message},
+      },
+    };
   }
 };
