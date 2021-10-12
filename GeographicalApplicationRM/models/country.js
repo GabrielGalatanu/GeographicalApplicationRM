@@ -90,10 +90,16 @@ class Country {
     selectedCountryCurrency,
   ) => {
     try {
-      return await getExchangeRateApiAsync(
+      let value = await getExchangeRateApiAsync(
         deviceCurrency,
         selectedCountryCurrency,
       );
+
+      let valueString = `${selectedCountryCurrency} (1 ${deviceCurrency} = ${value.toFixed(
+        2,
+      )} ${selectedCountryCurrency})`;
+
+      return valueString;
     } catch (err) {
       console.log(err);
     }

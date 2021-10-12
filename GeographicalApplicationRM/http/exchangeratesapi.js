@@ -17,11 +17,7 @@ export const getExchangeRateApiAsync = async (
     let value =
       json.rates[selectedCountryCurrency] / json.rates[deviceCurrency];
 
-    let valueString = `${selectedCountryCurrency} (1 ${deviceCurrency} = ${value.toFixed(
-      2,
-    )} ${selectedCountryCurrency})`;
-
-    return valueString;
+    return value;
   } catch (error) {
     console.log(error.message);
   }
