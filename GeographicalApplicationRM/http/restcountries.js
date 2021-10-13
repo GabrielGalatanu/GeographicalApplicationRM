@@ -6,18 +6,31 @@ const restCountriesBaseUrl = 'https://restcountries.com/v2';
  * Returns all data about a country.
  *
  * @param {string} country - Country name.
- * @param {Function} ifError - A function to run in case of an error.
  * @returns {Promise<CountryDTOData[]>}
  */
-export const getCountryAPI = async (country, ifError) => {
+export const getCountryAPI = async country => {
   try {
-    console.log('ba');
     const response = await fetch(`${restCountriesBaseUrl}/name/${country}`);
     const json = await response.json();
     return json;
   } catch (error) {
     return error;
-    //ifError();
+  }
+};
+
+/**
+ * Returns all data about a country.
+ *
+ * @param {string} alpha3Code - Country alpha3Code
+ * @returns {Promise<CountryDTOData>}
+ */
+export const getCountryAPIByAlpha3 = async alpha3Code => {
+  try {
+    const response = await fetch(`${restCountriesBaseUrl}/alpha/${alpha3Code}`);
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    return error;
   }
 };
 

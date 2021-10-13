@@ -13,12 +13,12 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import * as RNLocalize from 'react-native-localize';
 
-import CountryButton from 'components/CountryButton';
-import {getCountryAPI} from 'http/restcountries';
-import ApiAccessKeyExchangeRateAPI from 'constants/ApiAccessKeyExchangeRateAPI';
+import CountryButton from 'components/CountryButton'
 import Themes from 'constants/Themes';
 import Country from 'models/country';
 import 'types/index';
+
+import {getCountryDetailsDataService} from 'services/CountryDetailsScreenService';
 
 const CountryDetailsScreen = props => {
   const {route} = props;
@@ -33,87 +33,55 @@ const CountryDetailsScreen = props => {
   const [neighbours, setNeighbours] = useState([]);
 
   //Time counter:
-  let countryTimeIntervalCounter;
 
-  //TEMP:
-  useEffect(() => {
-    console.log(neighbours);
-  }, [neighbours]);
-  //TEMP//
-
-  useEffect(() => {
+  const timeCounter = useCallback(() => {
     if (country !== undefined) {
       setLocalTime(country.getLocalTime());
-
-      (async () => {
-        try {
-          setNeighbours(await country.getCountryNeighbours());
-        } catch (err) {
-          console.log('erroare async: ' + err.message);
-        }
-      })();
-
-      //Comment this because you have a limited amount of requests:
-      (async () => {
-        try {
-          setCurrenciesValues(
-            await country.getCurrenciesValueComparison(
-              RNLocalize.getCurrencies()[0],
-              country.currency,
-            ),
-          );
-        } catch (err) {
-          console.log('erroare async: ' + err.message);
-        }
-      })();
-      //Comment this because you have a limited amount of requests//
-
-      countryTimeIntervalCounter = setInterval(() => timeCounter(), 1000);
-
-      return () => {
-        clearInterval(countryTimeIntervalCounter);
-      };
     }
   }, [country]);
 
-  const timeCounter = () => {
-    if (country !== undefined) {
-      setLocalTime(country.getLocalTime());
-    }
-  };
+  useEffect(() => {
+    let countryTimeIntervalCounter = setInterval(() => timeCounter(), 1000);
+
+    return () => {
+      clearInterval(countryTimeIntervalCounter);
+    };
+  }, [country, timeCounter]);
+
   //Time counter//
 
   const fetchDataFromAPI = useCallback(() => {
-    (async () => {
-      setIsLoading(true);
+    const getData = async () => {
+      try {
+        setIsLoading(true);
 
-      const response = await getCountryAPI(
-        route.params.country,
-        dataFailedToLoad,
-      );
+        let data = await getCountryDetailsDataService(route.params.country);
 
-      const CountryInfo = new Country(
-        response[0].name,
-        response[0].alpha2Code,
-        response[0].flags.png,
-        response[0].capital,
-        response[0].population,
-        response[0].area,
-        response[0].currencies[0].code,
-        response[0].timezones,
-        response[0].borders,
-      );
+        setCountry(data.country);
+        setNeighbours(data.neighbours);
+        setLocalTime(data.country.getLocalTime());
+        setCurrenciesValues(
+          data.country.getCurrenciesValueComparison(
+            data.currencyValue,
+            RNLocalize.getCurrencies()[0],
+            data.country.currency,
+          ),
+        );
 
-      setCountry(CountryInfo);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-      setIsLoading(false);
-    })();
+    getData();
   }, [route.params.country]);
 
   useEffect(() => {
     fetchDataFromAPI();
   }, [fetchDataFromAPI]);
 
+  // Sa generalizez:
   const dataFailedToLoad = () => {
     setIsError(true);
   };
@@ -127,6 +95,9 @@ const CountryDetailsScreen = props => {
     props.navigation.push('CountryDetailScreen', {country: neighbour});
   };
 
+  // Sa generalizez//
+
+  ////////////////////
   const isErrorJSXFragment = () => {
     return (
       <>
@@ -228,18 +199,19 @@ const CountryDetailsScreen = props => {
             </View>
 
             <View style={styles.neighboursContainer}>
-              {neighbours.map(neighbour => {
-                if (neighbour !== undefined) {
-                  return (
-                    <CountryButton
-                      key={neighbour.alpha2Code}
-                      alpha2Code={neighbour.alpha2Code}
-                      country={neighbour.name}
-                      onPress={navigateToNeighbour}
-                    />
-                  );
-                }
-              })}
+              {neighbours !== undefined &&
+                neighbours.map(neighbour => {
+                  if (neighbour !== undefined) {
+                    return (
+                      <CountryButton
+                        key={neighbour.alpha2Code}
+                        alpha2Code={neighbour.alpha2Code}
+                        country={neighbour.name}
+                        onPress={navigateToNeighbour}
+                      />
+                    );
+                  }
+                })}
             </View>
           </View>
         </ScrollView>

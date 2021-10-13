@@ -86,51 +86,21 @@ class Country {
   /**
    *  Method that takes two currencies (ex: getCurrenciesValueComparison('EUR','RON')) and returns a string that displays how much one currency is valued based on the other.
    *
+   * @param {number} value
    * @param {string} deviceCurrency
    * @param {string} selectedCountryCurrency
-   * @returns {Promise<string>} A string that displays the value difference between the two currencies.
+   * @returns {string} A string that displays the value difference between the two currencies.
    */
-  getCurrenciesValueComparison = async (
+  getCurrenciesValueComparison = (
+    value,
     deviceCurrency,
     selectedCountryCurrency,
   ) => {
-    try {
-      let value = await getExchangeRateApiAsync(
-        deviceCurrency,
-        selectedCountryCurrency,
-      );
+    let valueString = `${selectedCountryCurrency} (1 ${deviceCurrency} = ${value.toFixed(
+      2,
+    )} ${selectedCountryCurrency})`;
 
-      let valueString = `${selectedCountryCurrency} (1 ${deviceCurrency} = ${value.toFixed(
-        2,
-      )} ${selectedCountryCurrency})`;
-
-      return valueString;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  getCountryNeighbours = async () => {
-    try {
-      let neighbours = [];
-      this.borders.forEach(element => {
-        neighbours.push(countryListAlpha3[element]);
-      });
-
-      let neighboursInfo = [];
-
-      for (var i = 0; i < neighbours.length; i++) {
-        let data = await getCountryAPI(neighbours[i], () => {});
-        neighboursInfo.push({
-          alpha2Code: data[0].alpha2Code,
-          name: data[0].name,
-        });
-      }
-
-      return neighboursInfo;
-    } catch (err) {
-      console.log('erroar: ' + err.message);
-    }
+    return valueString;
   };
 }
 
