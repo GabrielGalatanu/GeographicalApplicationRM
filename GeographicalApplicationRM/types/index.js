@@ -19,6 +19,7 @@
  * @property {string} borderRadius
  * @property {{png: string}} flags
  * @property {CountryCurrencies[]} currencies
+ * @property {string[]} borders
  */
 
 /**
@@ -31,6 +32,7 @@
  * @property {number} area
  * @property {string} currency
  * @property {string} timezones
+ * @property {string[]} borders
  */
 
 /**

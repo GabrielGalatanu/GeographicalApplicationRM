@@ -1,5 +1,7 @@
 import moment from 'moment';
 import {getExchangeRateApiAsync} from 'http/exchangeratesapi';
+import {getCountryAPI} from 'http/restcountries';
+import countryListAlpha3 from 'constants/countryListAlpha3';
 /**
  * Class representing a country.
  */
@@ -15,6 +17,7 @@ class Country {
    * @param {number} area
    * @param {string} currency
    * @param {string} timezones
+   * @param {string[]} borders
    */
   constructor(
     name,
@@ -25,6 +28,7 @@ class Country {
     area,
     currency,
     timezones,
+    borders,
   ) {
     this.name = name;
     this.alpha2Code = alpha2Code;
@@ -34,6 +38,7 @@ class Country {
     this.area = area;
     this.currency = currency;
     this.timezones = timezones;
+    this.borders = borders;
   }
 
   /**
@@ -102,6 +107,29 @@ class Country {
       return valueString;
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  getCountryNeighbours = async () => {
+    try {
+      let neighbours = [];
+      this.borders.forEach(element => {
+        neighbours.push(countryListAlpha3[element]);
+      });
+
+      let neighboursInfo = [];
+
+      for (var i = 0; i < neighbours.length; i++) {
+        let data = await getCountryAPI(neighbours[i], () => {});
+        neighboursInfo.push({
+          alpha2Code: data[0].alpha2Code,
+          name: data[0].name,
+        });
+      }
+
+      return neighboursInfo;
+    } catch (err) {
+      console.log('erroar: ' + err.message);
     }
   };
 }

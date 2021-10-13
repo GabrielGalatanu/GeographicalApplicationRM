@@ -13,6 +13,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import * as RNLocalize from 'react-native-localize';
 
+import CountryButton from 'components/CountryButton';
 import {getCountryAPI} from 'http/restcountries';
 import ApiAccessKeyExchangeRateAPI from 'constants/ApiAccessKeyExchangeRateAPI';
 import Themes from 'constants/Themes';
@@ -29,13 +30,28 @@ const CountryDetailsScreen = props => {
   const [isError, setIsError] = useState(false);
   const [localTime, setLocalTime] = useState('');
   const [currenciesValues, setCurrenciesValues] = useState('');
+  const [neighbours, setNeighbours] = useState([]);
 
   //Time counter:
   let countryTimeIntervalCounter;
 
+  //TEMP:
+  useEffect(() => {
+    console.log(neighbours);
+  }, [neighbours]);
+  //TEMP//
+
   useEffect(() => {
     if (country !== undefined) {
       setLocalTime(country.getLocalTime());
+
+      (async () => {
+        try {
+          setNeighbours(await country.getCountryNeighbours());
+        } catch (err) {
+          console.log('erroare async: ' + err.message);
+        }
+      })();
 
       //Comment this because you have a limited amount of requests:
       (async () => {
@@ -85,6 +101,7 @@ const CountryDetailsScreen = props => {
         response[0].area,
         response[0].currencies[0].code,
         response[0].timezones,
+        response[0].borders,
       );
 
       setCountry(CountryInfo);
@@ -104,6 +121,10 @@ const CountryDetailsScreen = props => {
   const reloadButtonHandler = () => {
     setIsError(false);
     fetchDataFromAPI();
+  };
+
+  const navigateToNeighbour = neighbour => {
+    props.navigation.push('CountryDetailScreen', {country: neighbour});
   };
 
   const isErrorJSXFragment = () => {
@@ -149,52 +170,54 @@ const CountryDetailsScreen = props => {
                 {country.name}({country.alpha2Code})
               </Text>
             </View>
-          </View>
 
-          <View style={styles.detailsLineContainer}>
-            <View style={styles.detailsLine} />
-            <View>
-              <Text style={styles.detailsLineText}>Details</Text>
-            </View>
-            <View style={styles.detailsLine} />
-          </View>
-
-          <View style={styles.detailsContainer}>
-            <Text style={styles.countryNameText}>
-              Capital: {country.capital}
-            </Text>
-
-            <View style={styles.separationLineContainer}>
-              <View style={styles.separationLine} />
+            <View style={styles.detailsLineContainer}>
+              <View style={styles.detailsLine} />
+              <View>
+                <Text style={styles.detailsLineText}>Details</Text>
+              </View>
+              <View style={styles.detailsLine} />
             </View>
 
-            <Text style={styles.countryNameText}>
-              Population: {country.population}
-            </Text>
-
-            <View style={styles.separationLineContainer}>
-              <View style={styles.separationLine} />
-            </View>
-
-            <Text style={styles.countryNameText}>Area: {country.area} Km²</Text>
-
-            <View style={styles.separationLineContainer}>
-              <View style={styles.separationLine} />
-            </View>
-
-            <View style={styles.countryTimeContainer}>
+            <View style={styles.detailsContainer}>
               <Text style={styles.countryNameText}>
-                Local Time: {localTime}
+                Capital: {country.capital}
+              </Text>
+
+              <View style={styles.separationLineContainer}>
+                <View style={styles.separationLine} />
+              </View>
+
+              <Text style={styles.countryNameText}>
+                Population: {country.population}
+              </Text>
+
+              <View style={styles.separationLineContainer}>
+                <View style={styles.separationLine} />
+              </View>
+
+              <Text style={styles.countryNameText}>
+                Area: {country.area} Km²
+              </Text>
+
+              <View style={styles.separationLineContainer}>
+                <View style={styles.separationLine} />
+              </View>
+
+              <View style={styles.countryTimeContainer}>
+                <Text style={styles.countryNameText}>
+                  Local Time: {localTime}
+                </Text>
+              </View>
+
+              <View style={styles.separationLineContainer}>
+                <View style={styles.separationLine} />
+              </View>
+
+              <Text style={styles.countryNameText}>
+                Currency: {country !== undefined && currenciesValues}
               </Text>
             </View>
-
-            <View style={styles.separationLineContainer}>
-              <View style={styles.separationLine} />
-            </View>
-
-            <Text style={styles.countryNameText}>
-              Currency: {country !== undefined && currenciesValues}
-            </Text>
 
             <View style={styles.detailsLineContainer}>
               <View style={styles.detailsLine} />
@@ -202,6 +225,21 @@ const CountryDetailsScreen = props => {
                 <Text style={styles.detailsLineText}>Neighbours</Text>
               </View>
               <View style={styles.detailsLine} />
+            </View>
+
+            <View style={styles.neighboursContainer}>
+              {neighbours.map(neighbour => {
+                if (neighbour !== undefined) {
+                  return (
+                    <CountryButton
+                      key={neighbour.alpha2Code}
+                      alpha2Code={neighbour.alpha2Code}
+                      country={neighbour.name}
+                      onPress={navigateToNeighbour}
+                    />
+                  );
+                }
+              })}
             </View>
           </View>
         </ScrollView>
@@ -240,6 +278,8 @@ export const screenOptions = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    width: '100%',
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -310,7 +350,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   detailsContainer: {
-    marginTop: 50,
+    marginTop: 20,
     width: (Dimensions.get('window').width * 95) / 100,
     height: (Dimensions.get('window').width * 50) / 100,
     alignItems: 'flex-start',
@@ -330,6 +370,12 @@ const styles = StyleSheet.create({
   countryTimeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  neighboursContainer: {
+    marginTop: 5,
+    width: (Dimensions.get('window').width * 95) / 100,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
