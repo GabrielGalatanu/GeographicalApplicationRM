@@ -16,8 +16,8 @@ export const getCountryDetailsDataService = async countryName => {
       neighboursArray = await getNeighboursData(countryDTO[0].borders);
     }
 
-    let currencyValue = await getCurrencyData(countryDTO[0].currencies[0].code);
-    // let currencyValue = 0.23;
+    //let currencyValue = await getCurrencyData(countryDTO[0].currencies[0].code);
+    let currencyValue = 0.23;
 
     let countryData = {
       country: CountryMapper(countryDTO[0]),

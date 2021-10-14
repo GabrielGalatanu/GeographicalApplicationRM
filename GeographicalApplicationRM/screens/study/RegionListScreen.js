@@ -14,6 +14,8 @@ import {getAllRegionsAPI} from 'http/restcountries';
 
 import 'types/index';
 
+import {apiErrorHandler} from '../../error/apiErrorHandlers';
+
 /**
  *
  * @param {RegionListScreenProps} props
@@ -21,56 +23,22 @@ import 'types/index';
 
 const RegionListScreen = props => {
   const [regionArray, setRegionArray] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const [apiRequestPromiseType, setApiRequestPromiseType] =
+    useState('_LOADING');
 
   const fetchDataFromAPI = useCallback(async () => {
-    setIsLoading(true);
-
     let response = await getAllRegionsAPI();
-    console.log(response.data);
-    if (fetchDataFromAPIErrorCheck(response)) {
-      dataFailedToLoad();
-    } else {
-      if (response.data.promiseType === 'RegionDTO') {
-        setRegionArray(response.data.json);
-        setIsLoading(false);
-      }
-    }
+
+    setApiRequestPromiseType(response.data.promiseType);
+    setRegionArray(response.data.json);
   }, []);
 
   useEffect(() => {
     fetchDataFromAPI();
   }, [fetchDataFromAPI]);
 
-  /**
-   * @param {RegionFetchFailed|RegionDTO|RegionFetchError} regionData
-   */
-  const fetchDataFromAPIErrorCheck = regionData => {
-    let ifError = false;
-
-    switch (regionData.data.promiseType) {
-      case 'RegionFetchError':
-        ifError = true;
-        break;
-      case 'RegionFetchFailed':
-        ifError = true;
-        break;
-      default:
-        ifError = false;
-        break;
-    }
-
-    return ifError;
-  };
-
-  const dataFailedToLoad = () => {
-    setIsLoading(false);
-    setIsError(true);
-  };
-
   const reloadButtonHandler = () => {
-    setIsError(false);
+    setApiRequestPromiseType('_LOADING');
     fetchDataFromAPI();
   };
 
@@ -78,30 +46,7 @@ const RegionListScreen = props => {
     props.navigation.navigate('CountriesListScreen', {region: region});
   };
 
-  const isErrorJSXFragment = () => {
-    return (
-      <>
-        <Text style={styles.errorText}>Data failed to load!</Text>
-        <TouchableOpacity
-          style={styles.errorButton}
-          onPress={() => {
-            reloadButtonHandler();
-          }}>
-          <Text style={styles.errorButtonText}>Reload?</Text>
-        </TouchableOpacity>
-      </>
-    );
-  };
-
-  const isLoadingJSXFragment = () => {
-    return (
-      <>
-        <ActivityIndicator size="large" color={Themes.colors.twitchHeader} />
-      </>
-    );
-  };
-
-  const mainJSXFragment = () => {
+  const createMainJSXFragment = () => {
     return (
       <>
         {regionArray.map(region => {
@@ -125,9 +70,10 @@ const RegionListScreen = props => {
         Themes.colors.twitchGradientEnd,
       ]}
       style={styles.screen}>
-      {isError && isErrorJSXFragment()}
-      {isLoading && !isError && isLoadingJSXFragment()}
-      {!isLoading && !isError && mainJSXFragment()}
+      {apiErrorHandler(apiRequestPromiseType, reloadButtonHandler) ===
+      'create_main_content'
+        ? createMainJSXFragment()
+        : apiErrorHandler(apiRequestPromiseType, reloadButtonHandler)}
     </LinearGradient>
   );
 };

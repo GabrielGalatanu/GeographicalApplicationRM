@@ -1,7 +1,5 @@
 import moment from 'moment';
-import {getExchangeRateApiAsync} from 'http/exchangeratesapi';
-import {getCountryAPI} from 'http/restcountries';
-import countryListAlpha3 from 'constants/countryListAlpha3';
+
 /**
  * Class representing a country.
  */
