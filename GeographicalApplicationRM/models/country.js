@@ -52,33 +52,38 @@ class Country {
   /**
    * Method that returns the current time.
    *
-   * @returns {string} Local time based on the timezone selected.
+   * @returns {{timezone: string, time: string}[]} Local time based on the timezone selected.
    */
 
   getLocalTime() {
-    let timeString = this.timezones[0];
-    let hours = '';
-    let minutes = '';
-    let isNegative = 1;
+    let times = [];
+    for (let i = 0; i < this.timezones.length; i++) {
+      let timeString = this.timezones[i];
+      let hours = '';
+      let minutes = '';
+      let isNegative = 1;
 
-    if (timeString.includes('-')) {
-      isNegative = -1;
+      if (timeString.includes('-')) {
+        isNegative = -1;
+      }
+
+      hours = timeString.replace('UTC', '');
+      hours = hours.substring(1, hours.length);
+
+      if (hours.includes(':')) {
+        minutes = hours.substring(hours.indexOf(':') + 1, hours.length);
+        hours = hours.substring(0, hours.indexOf(':'));
+      }
+      var momentTime = moment
+        .utc()
+        .add(parseInt(hours, 10) * isNegative, 'hours')
+        .add(parseInt(minutes, 10) * isNegative, 'minutes')
+        .format('h:mm:ss a');
+
+      times.push({timezone: this.timezones[i], time: momentTime});
     }
 
-    hours = timeString.replace('UTC', '');
-    hours = hours.substring(1, hours.length);
-
-    if (hours.includes(':')) {
-      minutes = hours.substring(hours.indexOf(':') + 1, hours.length);
-      hours = hours.substring(0, hours.indexOf(':'));
-    }
-    var momentTime = moment
-      .utc()
-      .add(parseInt(hours, 10) * isNegative, 'hours')
-      .add(parseInt(minutes, 10) * isNegative, 'minutes')
-      .format('h:mm:ss a');
-
-    return momentTime;
+    return times;
   }
 
   /**

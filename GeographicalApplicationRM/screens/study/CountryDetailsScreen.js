@@ -13,7 +13,10 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import * as RNLocalize from 'react-native-localize';
 
-import CountryButton from 'components/CountryButton'
+import CountryButton from 'components/CountryButton';
+import DetailsSection from 'components/DetailsSection';
+import TimezonesSection from 'components/TimezonesSection';
+import NeighboursSection from 'components/NeighboursSection';
 import Themes from 'constants/Themes';
 import Country from 'models/country';
 import 'types/index';
@@ -28,7 +31,7 @@ const CountryDetailsScreen = props => {
   const [country, setCountry] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [localTime, setLocalTime] = useState('');
+  const [localTime, setLocalTime] = useState([]);
   const [currenciesValues, setCurrenciesValues] = useState('');
   const [neighbours, setNeighbours] = useState([]);
 
@@ -91,11 +94,11 @@ const CountryDetailsScreen = props => {
     fetchDataFromAPI();
   };
 
+  // Sa generalizez//
+
   const navigateToNeighbour = neighbour => {
     props.navigation.push('CountryDetailScreen', {country: neighbour});
   };
-
-  // Sa generalizez//
 
   ////////////////////
   const isErrorJSXFragment = () => {
@@ -142,77 +145,17 @@ const CountryDetailsScreen = props => {
               </Text>
             </View>
 
-            <View style={styles.detailsLineContainer}>
-              <View style={styles.detailsLine} />
-              <View>
-                <Text style={styles.detailsLineText}>Details</Text>
-              </View>
-              <View style={styles.detailsLine} />
-            </View>
+            <DetailsSection
+              country={country}
+              currenciesValues={currenciesValues}
+            />
 
-            <View style={styles.detailsContainer}>
-              <Text style={styles.countryNameText}>
-                Capital: {country.capital}
-              </Text>
+            <TimezonesSection localTime={localTime} />
 
-              <View style={styles.separationLineContainer}>
-                <View style={styles.separationLine} />
-              </View>
-
-              <Text style={styles.countryNameText}>
-                Population: {country.population}
-              </Text>
-
-              <View style={styles.separationLineContainer}>
-                <View style={styles.separationLine} />
-              </View>
-
-              <Text style={styles.countryNameText}>
-                Area: {country.area} Km²
-              </Text>
-
-              <View style={styles.separationLineContainer}>
-                <View style={styles.separationLine} />
-              </View>
-
-              <View style={styles.countryTimeContainer}>
-                <Text style={styles.countryNameText}>
-                  Local Time: {localTime}
-                </Text>
-              </View>
-
-              <View style={styles.separationLineContainer}>
-                <View style={styles.separationLine} />
-              </View>
-
-              <Text style={styles.countryNameText}>
-                Currency: {country !== undefined && currenciesValues}
-              </Text>
-            </View>
-
-            <View style={styles.detailsLineContainer}>
-              <View style={styles.detailsLine} />
-              <View>
-                <Text style={styles.detailsLineText}>Neighbours</Text>
-              </View>
-              <View style={styles.detailsLine} />
-            </View>
-
-            <View style={styles.neighboursContainer}>
-              {neighbours !== undefined &&
-                neighbours.map(neighbour => {
-                  if (neighbour !== undefined) {
-                    return (
-                      <CountryButton
-                        key={neighbour.alpha2Code}
-                        alpha2Code={neighbour.alpha2Code}
-                        country={neighbour.name}
-                        onPress={navigateToNeighbour}
-                      />
-                    );
-                  }
-                })}
-            </View>
+            <NeighboursSection
+              neighbours={neighbours}
+              onPress={navigateToNeighbour}
+            />
           </View>
         </ScrollView>
       </>
@@ -301,53 +244,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
     fontFamily: 'Yrsa-Bold',
-  },
-  detailsLineContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 15,
-  },
-  detailsLine: {
-    flex: 1,
-    height: 2,
-    backgroundColor: 'white',
-    marginBottom: 10,
-    marginTop: 5,
-  },
-  detailsLineText: {
-    width: 120,
-    textAlign: 'center',
-    color: 'white',
-    fontFamily: 'Yrsa-Bold',
-    fontSize: 20,
-  },
-  detailsContainer: {
-    marginTop: 20,
-    width: (Dimensions.get('window').width * 95) / 100,
-    height: (Dimensions.get('window').width * 50) / 100,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  separationLineContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 5,
-    marginBottom: 5,
-  },
-  separationLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: 'white',
-  },
-  countryTimeContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  neighboursContainer: {
-    marginTop: 5,
-    width: (Dimensions.get('window').width * 95) / 100,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 
