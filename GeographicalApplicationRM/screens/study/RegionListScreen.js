@@ -1,10 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {
-  StyleSheet,
-  Text,
-  ActivityIndicator,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -26,21 +21,34 @@ const RegionListScreen = props => {
   const [apiRequestPromiseType, setApiRequestPromiseType] =
     useState('_LOADING');
 
+  /**
+   * @type {[(import('react').ReactElement|string) ,React.Dispatch<React.SetStateAction<(import('react').ReactElement|string)>>]}.
+   */
+  const [apiErrorHandlerJSX, setApiErrorHandlerJSX] = useState();
+
   const fetchDataFromAPI = useCallback(async () => {
     let response = await getAllRegionsAPI();
 
     setApiRequestPromiseType(response.data.promiseType);
-    setRegionArray(response.data.json);
+    if (response.data.promiseType === 'RegionDTO') {
+      setRegionArray(response.data.json);
+    }
   }, []);
 
   useEffect(() => {
     fetchDataFromAPI();
   }, [fetchDataFromAPI]);
 
-  const reloadButtonHandler = () => {
+  const reloadButtonHandler = useCallback(() => {
     setApiRequestPromiseType('_LOADING');
     fetchDataFromAPI();
-  };
+  }, [fetchDataFromAPI]);
+
+  useEffect(() => {
+    setApiErrorHandlerJSX(
+      apiErrorHandler(apiRequestPromiseType, reloadButtonHandler),
+    );
+  }, [apiRequestPromiseType, reloadButtonHandler]);
 
   const navigateToCountriesListScreen = region => {
     props.navigation.navigate('CountriesListScreen', {region: region});
@@ -70,10 +78,9 @@ const RegionListScreen = props => {
         Themes.colors.twitchGradientEnd,
       ]}
       style={styles.screen}>
-      {apiErrorHandler(apiRequestPromiseType, reloadButtonHandler) ===
-      'create_main_content'
+      {apiErrorHandlerJSX === 'create_main_content'
         ? createMainJSXFragment()
-        : apiErrorHandler(apiRequestPromiseType, reloadButtonHandler)}
+        : apiErrorHandlerJSX}
     </LinearGradient>
   );
 };

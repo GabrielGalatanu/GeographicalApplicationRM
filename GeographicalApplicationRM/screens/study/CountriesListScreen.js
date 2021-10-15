@@ -1,11 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  FlatList,
-  Text,
-  ActivityIndicator,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, FlatList} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -13,6 +7,8 @@ import {getAllCountriesByRegionAPI} from 'http/restcountries';
 import CountryButton from 'components/CountryButton';
 import Themes from 'constants/Themes';
 import 'types/index.js';
+
+import {apiErrorHandler} from '../../error/apiErrorHandlers';
 
 /**
  * @param {CountriesListScreenProps} props
@@ -24,89 +20,43 @@ const CountriesListScreen = props => {
    * @type {[CountryDTOData[], CountriesStateSetter]} Countries
    */
   const [countries, setCountries] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-
-  const fetchDataFromAPI = useCallback(async () => {
-    setIsLoading(true);
-    let countriesData = await getAllCountriesByRegionAPI(route.params.region);
-    if (fetchDataFromAPIErrorCheck(countriesData)) {
-      dataFailedToLoad();
-    } else {
-      if (countriesData.data.promiseType === 'CountryDTO') {
-        setCountries(countriesData.data.json);
-        setIsLoading(false);
-      }
-    }
-  }, [route.params.region]);
+  const [apiRequestPromiseType, setApiRequestPromiseType] =
+    useState('_LOADING');
 
   /**
-   * @param {CountryFetchFailed|CountryDTO|CountryFetchError} countriesData
+   * @type {[(import('react').ReactElement|string) ,React.Dispatch<React.SetStateAction<(import('react').ReactElement|string)>>]}.
    */
-  const fetchDataFromAPIErrorCheck = countriesData => {
-    let ifError = false;
+  const [apiErrorHandlerJSX, setApiErrorHandlerJSX] = useState();
 
-    switch (countriesData.data.promiseType) {
-      case 'CountryFetchError':
-        if (countriesData.data.json.message === 'Network request failed') {
-          ifError = true;
-        }
-        break;
-      case 'CountryFetchFailed':
-        if (countriesData.data.json.status === 404) {
-          ifError = true;
-        }
-        break;
-      default:
-        ifError = false;
-        break;
+  const fetchDataFromAPI = useCallback(async () => {
+    let countriesData = await getAllCountriesByRegionAPI(route.params.region);
+
+    setApiRequestPromiseType(countriesData.data.promiseType);
+    if (countriesData.data.promiseType === 'CountryDTO') {
+      setCountries(countriesData.data.json);
     }
-
-    return ifError;
-  };
+  }, [route.params.region]);
 
   useEffect(() => {
     fetchDataFromAPI();
   }, [fetchDataFromAPI]);
 
-  const dataFailedToLoad = () => {
-    setIsLoading(false);
-    setIsError(true);
-  };
-
-  const reloadButtonHandler = () => {
-    setIsError(false);
+  const reloadButtonHandler = useCallback(() => {
+    setApiRequestPromiseType('_LOADING');
     fetchDataFromAPI();
-  };
+  }, [fetchDataFromAPI]);
+
+  useEffect(() => {
+    setApiErrorHandlerJSX(
+      apiErrorHandler(apiRequestPromiseType, reloadButtonHandler),
+    );
+  }, [apiRequestPromiseType, reloadButtonHandler]);
 
   const navigateToCountryDetailScreen = country => {
     navigation.navigate('CountryDetailScreen', {country: country});
   };
 
-  const isErrorJSXFragment = () => {
-    return (
-      <>
-        <Text style={styles.errorText}>Data failed to load!</Text>
-        <TouchableOpacity
-          style={styles.errorButton}
-          onPress={() => {
-            reloadButtonHandler();
-          }}>
-          <Text style={styles.errorButtonText}>Reload?</Text>
-        </TouchableOpacity>
-      </>
-    );
-  };
-
-  const isLoadingJSXFragment = () => {
-    return (
-      <>
-        <ActivityIndicator size="large" color={Themes.colors.twitchHeader} />
-      </>
-    );
-  };
-
-  const mainJSXFragment = () => {
+  const createMainJSXFragment = () => {
     return (
       <>
         <FlatList
@@ -132,9 +82,9 @@ const CountriesListScreen = props => {
         Themes.colors.twitchGradientEnd,
       ]}
       style={styles.screen}>
-      {isError && isErrorJSXFragment()}
-      {isLoading && !isError && isLoadingJSXFragment()}
-      {!isLoading && !isError && mainJSXFragment()}
+      {apiErrorHandlerJSX === 'create_main_content'
+        ? createMainJSXFragment()
+        : apiErrorHandlerJSX}
     </LinearGradient>
   );
 };

@@ -20,6 +20,7 @@ export const getCountryDetailsDataService = async countryName => {
     let currencyValue = 0.23;
 
     let countryData = {
+      promiseType: 'CountryDataDTO',
       country: CountryMapper(countryDTO[0]),
       neighbours: neighboursArray,
       currencyValue: currencyValue,
@@ -33,6 +34,7 @@ export const getCountryDetailsDataService = async countryName => {
 
 const getCountryData = async countryName => {
   let country = await getCountryAPI(countryName);
+
   return country;
 };
 

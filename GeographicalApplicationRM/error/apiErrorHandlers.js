@@ -19,6 +19,12 @@ export const apiErrorHandler = (type, reloadButtonHandler) => {
     case 'RegionFetchFailed':
       return createErrorContent(type, reloadButtonHandler);
 
+    case 'CountryFetchError':
+      return createErrorContent2(type, reloadButtonHandler);
+
+    case 'CountryFetchFailed':
+      return createErrorContent2(type, reloadButtonHandler);
+
     default:
       return 'create_main_content';
   }
@@ -29,6 +35,22 @@ const createErrorContent = (type, reloadButtonHandler) => {
     <>
       <Text style={styles.errorText}>{type}</Text>
       <Text style={styles.errorText}>Data failed to load!</Text>
+      <TouchableOpacity
+        style={styles.errorButton}
+        onPress={() => {
+          reloadButtonHandler();
+        }}>
+        <Text style={styles.errorButtonText}>Reload?</Text>
+      </TouchableOpacity>
+    </>
+  );
+};
+
+const createErrorContent2 = (type, reloadButtonHandler) => {
+  return (
+    <>
+      <Text style={styles.errorText}>{type}</Text>
+      <Text style={styles.errorText}>O alta erroare</Text>
       <TouchableOpacity
         style={styles.errorButton}
         onPress={() => {

@@ -3,8 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
-  ActivityIndicator,
   ScrollView,
   Dimensions,
   Image,
@@ -13,35 +11,41 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import * as RNLocalize from 'react-native-localize';
 
-import CountryButton from 'components/CountryButton';
 import DetailsSection from 'components/DetailsSection';
 import TimezonesSection from 'components/TimezonesSection';
 import NeighboursSection from 'components/NeighboursSection';
 import Themes from 'constants/Themes';
-import Country from 'models/country';
+
 import 'types/index';
+
+import {apiErrorHandler} from '../../error/apiErrorHandlers';
 
 import {getCountryDetailsDataService} from 'services/CountryDetailsScreenService';
 
 const CountryDetailsScreen = props => {
   const {route} = props;
   /**
-   * @type {[Country, CountryStateSetter]} Country
+   * @type {[CountryData, CountryDataStateSetter]}
    */
-  const [country, setCountry] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [localTime, setLocalTime] = useState([]);
-  const [currenciesValues, setCurrenciesValues] = useState('');
-  const [neighbours, setNeighbours] = useState([]);
+  const [countryData, setCountryData] = useState();
+
+  const [apiRequestPromiseType, setApiRequestPromiseType] =
+    useState('_LOADING');
+
+  /**
+   * @type {[(import('react').ReactElement|string) ,React.Dispatch<React.SetStateAction<(import('react').ReactElement|string)>>]}.
+   */
+  const [apiErrorHandlerJSX, setApiErrorHandlerJSX] = useState();
 
   //Time counter:
-
   const timeCounter = useCallback(() => {
-    if (country !== undefined) {
-      setLocalTime(country.getLocalTime());
+    if (countryData !== undefined) {
+      setCountryData({
+        ...countryData,
+        timezones: countryData.country.getLocalTime(),
+      });
     }
-  }, [country]);
+  }, [countryData]);
 
   useEffect(() => {
     let countryTimeIntervalCounter = setInterval(() => timeCounter(), 1000);
@@ -49,29 +53,25 @@ const CountryDetailsScreen = props => {
     return () => {
       clearInterval(countryTimeIntervalCounter);
     };
-  }, [country, timeCounter]);
-
+  }, [countryData, timeCounter]);
   //Time counter//
 
   const fetchDataFromAPI = useCallback(() => {
     const getData = async () => {
       try {
-        setIsLoading(true);
-
         let data = await getCountryDetailsDataService(route.params.country);
 
-        setCountry(data.country);
-        setNeighbours(data.neighbours);
-        setLocalTime(data.country.getLocalTime());
-        setCurrenciesValues(
-          data.country.getCurrenciesValueComparison(
+        setApiRequestPromiseType(data.promiseType);
+        setCountryData({
+          country: data.country,
+          neighbours: data.neighbours,
+          timezones: data.country.getLocalTime(),
+          currencyValue: data.country.getCurrenciesValueComparison(
             data.currencyValue,
             RNLocalize.getCurrencies()[0],
             data.country.currency,
           ),
-        );
-
-        setIsLoading(false);
+        });
       } catch (err) {
         console.log(err);
       }
@@ -84,76 +84,52 @@ const CountryDetailsScreen = props => {
     fetchDataFromAPI();
   }, [fetchDataFromAPI]);
 
-  // Sa generalizez:
-  const dataFailedToLoad = () => {
-    setIsError(true);
-  };
-
-  const reloadButtonHandler = () => {
-    setIsError(false);
+  const reloadButtonHandler = useCallback(() => {
+    setApiRequestPromiseType('_LOADING');
     fetchDataFromAPI();
-  };
-
-  // Sa generalizez//
+  }, [fetchDataFromAPI]);
 
   const navigateToNeighbour = neighbour => {
     props.navigation.push('CountryDetailScreen', {country: neighbour});
   };
 
-  ////////////////////
-  const isErrorJSXFragment = () => {
-    return (
-      <>
-        <Text style={styles.errorText}>Data failed to load!</Text>
-        <TouchableOpacity
-          style={styles.errorButton}
-          onPress={() => {
-            reloadButtonHandler();
-          }}>
-          <Text style={styles.errorButtonText}>Reload?</Text>
-        </TouchableOpacity>
-      </>
+  useEffect(() => {
+    setApiErrorHandlerJSX(
+      apiErrorHandler(apiRequestPromiseType, reloadButtonHandler),
     );
-  };
+  }, [apiRequestPromiseType, reloadButtonHandler]);
 
-  const isLoadingJSXFragment = () => {
-    return (
-      <>
-        <ActivityIndicator size="large" color={Themes.colors.twitchHeader} />
-      </>
-    );
-  };
-
-  const mainJSXFragment = () => {
+  const createMainJSXFragment = () => {
     return (
       <>
         <ScrollView>
+          {/* <Button title="test" onPress={() => test()} /> */}
           <View style={styles.screen}>
             <View style={styles.flagContainer}>
               <Image
                 style={styles.flag}
                 resizeMode={'cover'}
                 source={{
-                  uri: country.flagURL,
+                  uri: countryData.country.flagURL,
                 }}
               />
             </View>
 
             <View style={styles.countryNameContainer}>
               <Text style={styles.countryNameText}>
-                {country.name}({country.alpha2Code})
+                {countryData.country.name}({countryData.country.alpha2Code})
               </Text>
             </View>
 
             <DetailsSection
-              country={country}
-              currenciesValues={currenciesValues}
+              country={countryData.country}
+              currenciesValues={countryData.currencyValue}
             />
 
-            <TimezonesSection localTime={localTime} />
+            <TimezonesSection localTime={countryData.timezones} />
 
             <NeighboursSection
-              neighbours={neighbours}
+              neighbours={countryData.neighbours}
               onPress={navigateToNeighbour}
             />
           </View>
@@ -169,9 +145,9 @@ const CountryDetailsScreen = props => {
         Themes.colors.twitchGradientEnd,
       ]}
       style={styles.screen}>
-      {isError && isErrorJSXFragment()}
-      {isLoading && !isError && isLoadingJSXFragment()}
-      {!isLoading && !isError && mainJSXFragment()}
+      {apiErrorHandlerJSX === 'create_main_content'
+        ? createMainJSXFragment()
+        : apiErrorHandlerJSX}
     </LinearGradient>
   );
 };

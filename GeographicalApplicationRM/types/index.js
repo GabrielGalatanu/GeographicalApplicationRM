@@ -22,6 +22,24 @@
  * @property {string[]} borders
  */
 
+//Country Model:
+/**
+ * Method that returns the current time.
+ * @typedef {Function} getLocalTime
+ *
+ * @returns {{timezone: string, time: string}[]} Local time based on the timezone selected.
+ */
+
+/**
+ *  Method that takes two currencies (ex: getCurrenciesValueComparison('EUR','RON')) and returns a string that displays how much one currency is valued based on the other.
+ * @typedef {Function} getCurrenciesValueComparison
+ *
+ * @param {number} value
+ * @param {string} deviceCurrency
+ * @param {string} selectedCountryCurrency
+ * @returns {string} A string that displays the value difference between the two currencies.
+ */
+
 /**
  * @typedef Country
  * @property {string} name
@@ -33,7 +51,36 @@
  * @property {string} currency
  * @property {string} timezones
  * @property {string[]} borders
+ * @property {getLocalTime} getLocalTime
+ * @property {getCurrenciesValueComparison} getCurrenciesValueComparison
  */
+
+/**
+ * @typedef Neighbour
+ * @property {string} alpha2Code
+ * @property {string} name
+ */
+
+/**
+ * @typedef Timezone
+ * @property {string} time
+ * @property {string} timezone
+ */
+
+/**
+ * @typedef CountryData
+ *
+ * @property {Country} country
+ * @property {Neighbour[]} neighbours
+ * @property {Timezone[]} timezones
+ * @property {string} currencyValue
+ */
+
+/**
+ * @typedef {React.Dispatch<React.SetStateAction<CountryData>>} CountryDataStateSetter — Sets the value for a country.
+ */
+
+//Country Model//
 
 /**
  * @typedef RegionDTOData
