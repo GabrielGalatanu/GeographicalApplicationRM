@@ -14,6 +14,10 @@ import Themes from 'constants/Themes';
 
 const ModalGameConfiguration = props => {
   const [regionArray, setRegionArray] = useState([]);
+  const [selectedRegionArray, setSelectedRegionArray] = useState([
+    0, 0, 0, 0, 1, 0, 0, 0,
+  ]);
+  //new Array(8).fill(0),;
   const regionTempArray = useMemo(() => {
     return [
       ['Item1', 'Item2', 'Item3'],
@@ -26,6 +30,12 @@ const ModalGameConfiguration = props => {
     console.log('ok');
     setRegionArray(regionTempArray);
   }, [regionTempArray]);
+
+  const onChangeRegion = index => {
+    let array = new Array(8).fill(0);
+    array[index] = 1;
+    setSelectedRegionArray(array);
+  };
 
   return (
     <Modal
@@ -41,22 +51,31 @@ const ModalGameConfiguration = props => {
           onPress={() => props.changeVisible(!props.visible)}>
           <View style={styles.modalOverlay} />
         </TouchableWithoutFeedback>
-        {/* <Button
+        <Button
           title="ok"
           onPress={() => {
-            console.log(regionArray);
+            console.log(selectedRegionArray);
           }}
-        /> */}
+        />
         <View style={styles.modalView}>
           {/* Region Select: */}
 
           <View style={styles.gameConfigurationRegionContainer}>
             <Text style={styles.gameConfigurationText}> Region </Text>
-            {regionArray.map((region, index) => {
+            {regionArray.map((region, regionIndex) => {
               return (
                 <View style={styles.gameConfigurationRegionRow}>
-                  {region.map(element => {
-                    return <GameConfigurationButton label={element} />;
+                  {region.map((element, elementIndex) => {
+                    return (
+                      <GameConfigurationButton
+                        label={element}
+                        selected={
+                          selectedRegionArray[regionIndex * 3 + elementIndex]
+                        }
+                        onPress={onChangeRegion}
+                        index={regionIndex * 3 + elementIndex}
+                      />
+                    );
                   })}
                 </View>
               );
