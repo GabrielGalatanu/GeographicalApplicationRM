@@ -9,15 +9,18 @@ export const getCountryDetailsDataService = async countryName => {
     let countryDTO = await getCountryData(countryName);
 
     let neighboursArray = [];
+    let currencyValue = 23;
     if (
       countryDTO[0].borders !== undefined &&
       countryDTO[0].borders.length > 0
     ) {
-      neighboursArray = await getNeighboursData(countryDTO[0].borders);
+      [neighboursArray, currencyValue] = await Promise.all([
+        getNeighboursData(countryDTO[0].borders),
+        getCurrencyData(countryDTO[0].currencies[0].code),
+      ]);
+    } else {
+      currencyValue = await getCurrencyData(countryDTO[0].currencies[0].code);
     }
-
-    //let currencyValue = await getCurrencyData(countryDTO[0].currencies[0].code);
-    let currencyValue = 0.23;
 
     let countryData = {
       promiseType: 'CountryDataDTO',

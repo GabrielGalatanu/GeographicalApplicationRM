@@ -2,7 +2,7 @@
   "compilerOptions": {
     "checkJs": true,
     "jsx": "react-native",
-    "baseUrl": "./",
+    "baseUrl": "./"
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }

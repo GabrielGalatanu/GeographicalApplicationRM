@@ -153,7 +153,7 @@
  */
 
 /**
- * @typedef {{StatisticsScreen: undefined, GameScreen: undefined }} GameStackParamList
+ * @typedef {{StatisticsScreen: undefined, GameScreen: {region: string, questionCount: number, gameType: string} }} GameStackParamList
  */
 
 /**
@@ -177,6 +177,10 @@
 
 /**
  * @typedef {import('@react-navigation/native-stack').NativeStackScreenProps<StudyStackParamList, 'CountriesListScreen'>} CountriesListScreenProps
+ */
+
+/**
+ * @typedef {import('@react-navigation/native-stack').NativeStackScreenProps<GameStackParamList, 'GameScreen'>} GameScreenProps
  */
 //Screen navigation//
 

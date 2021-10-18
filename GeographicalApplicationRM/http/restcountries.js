@@ -1,5 +1,5 @@
 import 'types/index.js';
-
+//import {API_URL, API_TOKEN} from '@env';
 const restCountriesBaseUrl = 'https://restcountries.com/v2';
 
 /**
@@ -89,6 +89,10 @@ export const getAllCountriesByRegionAPI = async region => {
 
 export const getAllRegionsAPI = async () => {
   try {
+    // console.log('test');
+    // console.log(API_URL);
+    // console.log(process.env.API_URL)
+
     const response = await fetch(`${restCountriesBaseUrl}/all`);
     const json = await response.json();
 

@@ -1,26 +1,99 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Modal,
+  Pressable,
+  Alert,
+} from 'react-native';
 
-import {StyleSheet, Text, View} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+
+import ModalGameConfiguration from 'components/ModalGameConfiguration';
+import Themes from 'constants/Themes';
 
 const StatisticsScreen = () => {
+  const [modalVisible, setModalVisible] = useState(false);
   return (
-    <View style={styles.container}>
-      <Text> StatisticsScreen </Text>
-    </View>
+    <LinearGradient
+      colors={[
+        Themes.colors.twitchGradientStart,
+        Themes.colors.twitchGradientEnd,
+      ]}
+      style={styles.screen}>
+      <ModalGameConfiguration
+        visible={modalVisible}
+        changeVisible={setModalVisible}
+      />
+
+      <View style={styles.statisticsContainer}>
+        <Text> No data!</Text>
+      </View>
+
+      <View style={styles.startButtonContainer}>
+        <TouchableOpacity
+          style={styles.startButton}
+          onPress={() => {
+            setModalVisible(true);
+          }}>
+          <Text style={styles.startButtonText}>Start</Text>
+        </TouchableOpacity>
+      </View>
+    </LinearGradient>
   );
 };
 
 export const screenOptions = () => {
   return {
-    headerTitle: 'Statistics!',
+    headerTitle: 'Statistics',
+    headerTintColor: 'white',
+    headerStyle: {
+      backgroundColor: Themes.colors.twitchHeader,
+    },
+    headerTitleStyle: {
+      fontFamily: 'Yrsa-Bold',
+      fontSize: 25,
+    },
   };
 };
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  statisticsContainer: {
+    width: '90%',
+    height: '80%',
+    marginTop: 15,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  startButtonContainer: {
+    width: '90%',
+    height: '15%',
+    marginBottom: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  startButton: {
+    width: '30%',
+    height: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: Themes.borders.widthValue,
+    borderRadius: Themes.borders.radiusValue,
+    backgroundColor: Themes.colors.twitchGradientStart,
+    borderColor: Themes.colors.twitchHeader,
+  },
+  startButtonText: {
+    fontSize: 30,
+    color: 'white',
+    letterSpacing: 1,
+    fontFamily: 'Yrsa-Bold',
   },
 });
 

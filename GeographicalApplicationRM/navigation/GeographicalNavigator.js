@@ -18,6 +18,9 @@ import RegionListScreen, {
 import StatisticsScreen, {
   screenOptions as StatisticsScreenOptions,
 } from '../screens/game/StatisticsScreen';
+import GameScreen, {
+  screenOptions as GameScreenOptions,
+} from '../screens/game/GameScreen';
 
 import Themes from 'constants/Themes';
 import 'types/index';
@@ -63,6 +66,11 @@ export const GameNavigator = () => {
         name="StatisticsScreen"
         component={StatisticsScreen}
         options={StatisticsScreenOptions}
+      />
+      <GameStackNavigator.Screen
+        name="GameScreen"
+        component={GameScreen}
+        options={GameScreenOptions}
       />
     </GameStackNavigator.Navigator>
   );
