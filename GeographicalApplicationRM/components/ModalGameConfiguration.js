@@ -83,7 +83,9 @@ const ModalGameConfiguration = props => {
             <Text style={styles.gameConfigurationText}> Region </Text>
             {buttonsArray.region.map((region, regionIndex) => {
               return (
-                <View style={styles.gameConfigurationRegionRow}>
+                <View
+                  key={regionIndex}
+                  style={styles.gameConfigurationRegionRow}>
                   {region.map((element, elementIndex) => {
                     return (
                       <GameConfigurationButton
@@ -145,12 +147,14 @@ const ModalGameConfiguration = props => {
           {/* Start/cancel Buttons: */}
           <View style={styles.buttonsContainer}>
             <ModalButton
+              key={'start'}
               selected={selectedArray}
               id="start"
               label="Start"
               onPress={navigateToGame}
             />
             <ModalButton
+              key={'cancel'}
               id="cancel"
               label="Cancel"
               onPress={() => props.changeVisible(!props.visible)}
