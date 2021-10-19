@@ -110,7 +110,11 @@ const CountryDetailsScreen = props => {
                 style={styles.flag}
                 resizeMode={'cover'}
                 source={{
-                  uri: countryData.country.flagURL,
+                  // uri: countryData.country.flagURL,
+                  uri:
+                    'https://www.countryflags.io/' +
+                    countryData.country.alpha2Code +
+                    '/flat/64.png',
                 }}
               />
             </View>

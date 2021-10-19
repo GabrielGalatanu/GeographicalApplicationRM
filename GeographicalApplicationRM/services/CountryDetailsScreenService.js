@@ -67,7 +67,7 @@ const CountryMapper = CountryMapperDTO => {
   const CountryInfo = new Country(
     CountryMapperDTO.name,
     CountryMapperDTO.alpha2Code,
-    CountryMapperDTO.flags.png,
+    CountryMapperDTO.flag,
     CountryMapperDTO.capital,
     CountryMapperDTO.population,
     CountryMapperDTO.area,

@@ -1,7 +1,14 @@
 import 'types/index.js';
 //import {API_URL, API_TOKEN} from '@env';
-const restCountriesBaseUrl = 'https://restcountries.com/v2';
+/*
+https://restcountries.com/v2/name/{country}
+https://restcountries.com/v2/alpha/{alpha3Code}
+https://restcountries.com/v2/continent/${region}
+https://restcountries.com/v2/all
+*/
 
+const restCountriesBaseUrl = 'https://restcountries.com/v2';
+//const restCountriesBaseUrl = 'http://localhost:3000';
 /**
  * Returns all data about a country.
  *
@@ -43,21 +50,21 @@ export const getCountryAPIByAlpha3 = async alpha3Code => {
 
 export const getAllCountriesByRegionAPI = async region => {
   try {
-    //const response = await fetch(`${restCountriesBaseUrl}/continent/${region}`);
-    //const json = await response.json();
+    const response = await fetch(`${restCountriesBaseUrl}/region/${region}`);
+    const json = await response.json();
 
     //TEMPORARY WHILE THE ENDPOINT IS NOT WORKING:
-    const response = await fetch('https://restcountries.com/v2/all');
-    let json = await response.json();
+    // const response = await fetch('https://restcountries.com/v2/all');
+    // let json = await response.json();
 
-    let json2 = [];
-    json.forEach(country => {
-      if (country.region === region) {
-        json2.push(country);
-      }
-    });
+    // let json2 = [];
+    // json.forEach(country => {
+    //   if (country.region === region) {
+    //     json2.push(country);
+    //   }
+    // });
 
-    json = json2;
+    // json = json2;
 
     //TEMPORARY WHILE THE ENDPOINT IS NOT WORKING//
 

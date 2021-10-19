@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 import Themes from 'constants/Themes';
 const GameConfigurationButton = props => {
@@ -7,9 +7,11 @@ const GameConfigurationButton = props => {
     <TouchableOpacity
       style={[
         styles.container,
-        props.selected === 1 ? styles.buttonSelected : styles.buttonNotSelected,
+        props.selected === props.label
+          ? styles.buttonSelected
+          : styles.buttonNotSelected,
       ]}
-      onPress={() => props.onPress(props.index)}>
+      onPress={() => props.onPress(props.index, props.id)}>
       <Text style={styles.text}>{props.label}</Text>
     </TouchableOpacity>
   );

@@ -1,21 +1,18 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  Pressable,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
 import ModalGameConfiguration from 'components/ModalGameConfiguration';
 import Themes from 'constants/Themes';
 
-const StatisticsScreen = () => {
+const StatisticsScreen = props => {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const navigateToGame = options => {
+    props.navigation.navigate('GameScreen', {options: options});
+  };
+
   return (
     <LinearGradient
       colors={[
@@ -26,6 +23,7 @@ const StatisticsScreen = () => {
       <ModalGameConfiguration
         visible={modalVisible}
         changeVisible={setModalVisible}
+        navigateToGame={navigateToGame}
       />
 
       <View style={styles.statisticsContainer}>
