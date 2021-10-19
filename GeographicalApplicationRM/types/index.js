@@ -153,7 +153,7 @@
  */
 
 /**
- * @typedef {{StatisticsScreen: undefined, GameScreen: {region: string, questionCount: number, gameType: string} }} GameStackParamList
+ * @typedef {{StatisticsScreen: undefined, GameScreen: {region: string, questionCount: number, gameType: string}, ModalGameConfiguration: undefined }} GameStackParamList
  */
 
 /**

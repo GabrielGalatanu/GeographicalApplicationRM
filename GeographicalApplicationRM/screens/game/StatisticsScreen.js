@@ -20,11 +20,11 @@ const StatisticsScreen = props => {
         Themes.colors.twitchGradientEnd,
       ]}
       style={styles.screen}>
-      <ModalGameConfiguration
+      {/* <ModalGameConfiguration
         visible={modalVisible}
         changeVisible={setModalVisible}
         navigateToGame={navigateToGame}
-      />
+      /> */}
 
       <View style={styles.statisticsContainer}>
         <Text> No data!</Text>
@@ -34,7 +34,8 @@ const StatisticsScreen = props => {
         <TouchableOpacity
           style={styles.startButton}
           onPress={() => {
-            setModalVisible(true);
+            //setModalVisible(true);
+            props.navigation.navigate('ModalGameConfiguration');
           }}>
           <Text style={styles.startButtonText}>Start</Text>
         </TouchableOpacity>

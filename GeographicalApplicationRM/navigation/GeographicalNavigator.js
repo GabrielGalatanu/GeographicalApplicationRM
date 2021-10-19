@@ -22,6 +22,8 @@ import GameScreen, {
   screenOptions as GameScreenOptions,
 } from '../screens/game/GameScreen';
 
+import ModalGameConfiguration from 'components/ModalGameConfiguration';
+
 import Themes from 'constants/Themes';
 import 'types/index';
 
@@ -72,6 +74,12 @@ export const GameNavigator = () => {
         component={GameScreen}
         options={GameScreenOptions}
       />
+      <GameStackNavigator.Group screenOptions={{presentation: 'modal'}}>
+        <GameStackNavigator.Screen
+          name="ModalGameConfiguration"
+          component={ModalGameConfiguration}
+        />
+      </GameStackNavigator.Group>
     </GameStackNavigator.Navigator>
   );
 };

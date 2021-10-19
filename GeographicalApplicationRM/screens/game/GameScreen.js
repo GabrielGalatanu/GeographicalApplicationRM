@@ -9,6 +9,13 @@ import 'types/index';
  */
 
 const GameScreen = props => {
+  useEffect(() => {
+    console.log('insider');
+    //props.navigation.dangerouslyGetParent()?.goBack();
+    //props.navigation.popToTop();
+    //props.navigation.goBack();
+  }, [props.navigation]);
+
   return (
     <View style={styles.container}>
       <Text> Game Screen </Text>

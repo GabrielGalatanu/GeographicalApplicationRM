@@ -1,12 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  Modal,
-  Alert,
-  View,
-  Text,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {StyleSheet, View, Text, TouchableWithoutFeedback} from 'react-native';
 
 import GameConfigurationButton from './GameConfigurationButton';
 import ModalButton from './ModalButton';
@@ -26,25 +19,51 @@ const ModalGameConfiguration = props => {
     length: '',
   });
 
+  let buttonsPerRow = 3;
+
   useEffect(() => {
     const getData = async () => {
       try {
         let regions = await getStatisticsDataService();
+
+        let array = [];
+
+        if (regions.promiseType === 'RegionDTO') {
+          for (let i = 0; i < regions.json.length; i++) {
+            if ((i + 1) * buttonsPerRow < regions.json.length) {
+              array.push(
+                regions.json.slice(
+                  i * buttonsPerRow,
+                  i * buttonsPerRow + buttonsPerRow,
+                ),
+              );
+            } else {
+              array.push(
+                regions.json.slice(i * buttonsPerRow, regions.json.length),
+              );
+              break;
+            }
+          }
+        }
+
         setButtonsArray(prevButton => {
-          return {...prevButton, region: regions};
+          return {...prevButton, region: array};
         });
       } catch (err) {
         console.log(err);
       }
     };
     getData();
-  }, []);
+  }, [buttonsPerRow]);
 
   const onChangeModal = (index, id) => {
     let selected;
 
     if (id === 'region') {
-      selected = buttonsArray.region[Math.floor(index / 3)][index % 3];
+      selected =
+        buttonsArray.region[Math.floor(index / buttonsPerRow)][
+          index % buttonsPerRow
+        ];
     } else if (id === 'type') {
       selected = buttonsArray.type[index];
     } else if (id === 'length') {
@@ -57,114 +76,101 @@ const ModalGameConfiguration = props => {
   };
 
   const navigateToGame = () => {
-    props.changeVisible(!props.visible);
-    props.navigateToGame(selectedArray);
+    props.navigation.goBack();
+    props.navigation.navigate('GameScreen', {options: selectedArray});
   };
 
+  // numar magic sa schimb. (Done)
+  // sa tipizez
+  // react navigation sa prezint folosind un modal cu react navigation (Done)
   return (
-    <Modal
-      animationType="fade"
-      transparent={true}
-      visible={props.visible}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-        props.changeVisible(!props.visible);
-      }}>
-      <View style={styles.modalContent}>
-        <TouchableWithoutFeedback
-          onPress={() => props.changeVisible(!props.visible)}>
-          <View style={styles.modalOverlay} />
-        </TouchableWithoutFeedback>
+    <View style={styles.modalContent}>
+      <View style={styles.modalView}>
+        {/* Region Select: */}
 
-        <View style={styles.modalView}>
-          {/* Region Select: */}
+        <View style={styles.gameConfigurationRegionContainer}>
+          <Text style={styles.gameConfigurationText}> Region </Text>
+          {buttonsArray.region.map((region, regionIndex) => {
+            return (
+              <View key={regionIndex} style={styles.gameConfigurationRegionRow}>
+                {region.map((element, elementIndex) => {
+                  return (
+                    <GameConfigurationButton
+                      key={element}
+                      id="region"
+                      label={element}
+                      selected={selectedArray.region}
+                      onPress={onChangeModal}
+                      index={regionIndex * buttonsPerRow + elementIndex}
+                    />
+                  );
+                })}
+              </View>
+            );
+          })}
+        </View>
+        {/* Region Select// */}
+        {/* Game Type Select: */}
 
-          <View style={styles.gameConfigurationRegionContainer}>
-            <Text style={styles.gameConfigurationText}> Region </Text>
-            {buttonsArray.region.map((region, regionIndex) => {
+        <View style={styles.gameConfigurationTypeContainer}>
+          <Text style={styles.gameConfigurationText}> Type </Text>
+          <View style={styles.gameConfigurationTypeRow}>
+            {buttonsArray.type.map((type, index) => {
               return (
-                <View
-                  key={regionIndex}
-                  style={styles.gameConfigurationRegionRow}>
-                  {region.map((element, elementIndex) => {
-                    return (
-                      <GameConfigurationButton
-                        key={element}
-                        id="region"
-                        label={element}
-                        selected={selectedArray.region}
-                        onPress={onChangeModal}
-                        index={regionIndex * 3 + elementIndex}
-                      />
-                    );
-                  })}
-                </View>
+                <GameConfigurationButton
+                  key={type}
+                  id="type"
+                  label={type}
+                  selected={selectedArray.type}
+                  onPress={onChangeModal}
+                  index={index}
+                />
               );
             })}
           </View>
-          {/* Region Select// */}
-          {/* Game Type Select: */}
-
-          <View style={styles.gameConfigurationTypeContainer}>
-            <Text style={styles.gameConfigurationText}> Type </Text>
-            <View style={styles.gameConfigurationTypeRow}>
-              {buttonsArray.type.map((type, index) => {
-                return (
-                  <GameConfigurationButton
-                    key={type}
-                    id="type"
-                    label={type}
-                    selected={selectedArray.type}
-                    onPress={onChangeModal}
-                    index={index}
-                  />
-                );
-              })}
-            </View>
-          </View>
-          {/* Game Type Select// */}
-          {/* Game Length: */}
-
-          <View style={styles.gameConfigurationLengthContainer}>
-            <Text style={styles.gameConfigurationText}> Length </Text>
-            <View style={styles.gameConfigurationLengthRow}>
-              {buttonsArray.length.map((length, index) => {
-                return (
-                  <GameConfigurationButton
-                    key={length}
-                    id="length"
-                    label={length}
-                    selected={selectedArray.length}
-                    onPress={onChangeModal}
-                    index={index}
-                  />
-                );
-              })}
-            </View>
-          </View>
-          {/* Game Length// */}
-
-          {/* Start/cancel Buttons: */}
-          <View style={styles.buttonsContainer}>
-            <ModalButton
-              key={'start'}
-              selected={selectedArray}
-              id="start"
-              label="Start"
-              onPress={navigateToGame}
-            />
-            <ModalButton
-              key={'cancel'}
-              id="cancel"
-              label="Cancel"
-              onPress={() => props.changeVisible(!props.visible)}
-            />
-          </View>
-
-          {/* Start/cancel Buttons// */}
         </View>
+        {/* Game Type Select// */}
+        {/* Game Length: */}
+
+        <View style={styles.gameConfigurationLengthContainer}>
+          <Text style={styles.gameConfigurationText}> Length </Text>
+          <View style={styles.gameConfigurationLengthRow}>
+            {buttonsArray.length.map((length, index) => {
+              return (
+                <GameConfigurationButton
+                  key={length}
+                  id="length"
+                  label={length}
+                  selected={selectedArray.length}
+                  onPress={onChangeModal}
+                  index={index}
+                />
+              );
+            })}
+          </View>
+        </View>
+        {/* Game Length// */}
+
+        {/* Start/cancel Buttons: */}
+        <View style={styles.buttonsContainer}>
+          <ModalButton
+            key={'start'}
+            selected={selectedArray}
+            id="start"
+            label="Start"
+            onPress={navigateToGame}
+          />
+          <ModalButton
+            key={'cancel'}
+            id="cancel"
+            label="Cancel"
+            onPress={() => props.navigation.goBack()}
+          />
+        </View>
+
+        {/* Start/cancel Buttons// */}
       </View>
-    </Modal>
+    </View>
   );
 };
 
@@ -185,11 +191,11 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   modalView: {
-    width: '90%',
-    height: '75%',
+    width: '100%',
+    height: '100%',
     margin: 10,
     backgroundColor: Themes.colors.twitchGradientStart,
-    borderRadius: 20,
+    //borderRadius: 20,
     padding: 5,
     alignItems: 'center',
     shadowColor: '#000',
