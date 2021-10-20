@@ -96,6 +96,7 @@ const ModalGameConfiguration = props => {
                 {region.map((element, elementIndex) => {
                   return (
                     <GameConfigurationButton
+                      count={buttonsPerRow}
                       key={element}
                       id="region"
                       label={element}
@@ -118,6 +119,7 @@ const ModalGameConfiguration = props => {
             {buttonsArray.type.map((type, index) => {
               return (
                 <GameConfigurationButton
+                  count={buttonsPerRow}
                   key={type}
                   id="type"
                   label={type}
@@ -138,6 +140,7 @@ const ModalGameConfiguration = props => {
             {buttonsArray.length.map((length, index) => {
               return (
                 <GameConfigurationButton
+                  count={buttonsPerRow}
                   key={length}
                   id="length"
                   label={length}

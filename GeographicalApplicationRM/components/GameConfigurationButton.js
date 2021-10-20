@@ -10,9 +10,12 @@ const GameConfigurationButton = props => {
         props.selected === props.label
           ? styles.buttonSelected
           : styles.buttonNotSelected,
+        {width: `${(100 / props.count) * 0.9}%`},
       ]}
       onPress={() => props.onPress(props.index, props.id)}>
-      <Text style={styles.text}>{props.label}</Text>
+      <Text style={[styles.text, {fontSize: 35 - props.count * 5}]}>
+        {props.label}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -35,7 +38,7 @@ const styles = StyleSheet.create({
     borderColor: 'green',
   },
   text: {
-    fontSize: 20,
+    fontSize: 15,
     color: 'white',
     letterSpacing: 1,
     fontFamily: 'Yrsa-Bold',
