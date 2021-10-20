@@ -4,6 +4,11 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import Themes from 'constants/Themes';
+import 'types/index';
+
+/**
+ * @param {StatisticsScreenProps} props
+ */
 
 const StatisticsScreen = props => {
   return (

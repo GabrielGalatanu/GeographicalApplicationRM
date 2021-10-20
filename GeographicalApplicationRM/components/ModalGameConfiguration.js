@@ -6,17 +6,29 @@ import ModalButton from './ModalButton';
 import Themes from 'constants/Themes';
 import {getStatisticsDataService} from 'services/StatisticsScreenServices';
 
+import 'types/index';
+
+/**
+ * @param {ModalGameConfigurationProps} props
+ */
+
 const ModalGameConfiguration = props => {
+  /**
+   * @type {[buttonsArray, buttonsArrayStateSetter]}
+   */
   const [buttonsArray, setButtonsArray] = useState({
     region: [],
     type: ['Capital', 'Flag', 'Neighbour'],
     length: [5, 10, 15],
   });
 
+  /**
+   * @type {[selectedArray, selectedArrayStateSetter]}
+   */
   const [selectedArray, setSelectedArray] = useState({
     region: '',
     type: '',
-    length: '',
+    length: 0,
   });
 
   let buttonsPerRow = 3;

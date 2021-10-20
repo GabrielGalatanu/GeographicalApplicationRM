@@ -147,6 +147,32 @@
 
 //https errors//
 
+//Game:
+/**
+ * @typedef buttonsArray
+ * @property {string[]} region
+ * @property {string[]} type
+ * @property {number[]} length
+ */
+
+/**
+ * @typedef {React.Dispatch<React.SetStateAction<buttonsArray>>} buttonsArrayStateSetter — Sets the value for a country.
+ */
+
+//Game:
+/**
+ * @typedef selectedArray
+ * @property {string} region
+ * @property {string} type
+ * @property {number} length
+ */
+
+/**
+ * @typedef {React.Dispatch<React.SetStateAction<selectedArray>>} selectedArrayStateSetter — Sets the value for a country.
+ */
+
+//Game//
+
 //Navigation:
 /**
  * @typedef {{RegionListScreen: undefined, CountriesListScreen: {region: string}, CountryDetailScreen: {country: string} }} StudyStackParamList
@@ -181,6 +207,15 @@
 
 /**
  * @typedef {import('@react-navigation/native-stack').NativeStackScreenProps<GameStackParamList, 'GameScreen'>} GameScreenProps
+ *
+ */
+
+/**
+ * @typedef {import('@react-navigation/native-stack').NativeStackScreenProps<GameStackParamList, 'StatisticsScreen'>} StatisticsScreenProps
+ */
+
+/**
+ * @typedef {import('@react-navigation/native-stack').NativeStackScreenProps<GameStackParamList, 'ModalGameConfiguration'>} ModalGameConfigurationProps
  */
 //Screen navigation//
 
