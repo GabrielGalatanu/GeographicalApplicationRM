@@ -9,12 +9,9 @@ import 'types/index';
  */
 
 const GameScreen = props => {
-  useEffect(() => {
-    console.log('insider');
-    //props.navigation.dangerouslyGetParent()?.goBack();
-    //props.navigation.popToTop();
-    //props.navigation.goBack();
-  }, [props.navigation]);
+  const {route} = props;
+
+  useEffect(() => {}, []);
 
   return (
     <View style={styles.container}>

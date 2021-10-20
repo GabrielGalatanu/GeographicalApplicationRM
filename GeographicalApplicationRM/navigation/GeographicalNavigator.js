@@ -22,7 +22,9 @@ import GameScreen, {
   screenOptions as GameScreenOptions,
 } from '../screens/game/GameScreen';
 
-import ModalGameConfiguration from 'components/ModalGameConfiguration';
+import ModalGameConfiguration, {
+  screenOptions as ModalGameConfigurationOptions,
+} from 'components/ModalGameConfiguration';
 
 import Themes from 'constants/Themes';
 import 'types/index';
@@ -74,12 +76,13 @@ export const GameNavigator = () => {
         component={GameScreen}
         options={GameScreenOptions}
       />
-      <GameStackNavigator.Group screenOptions={{presentation: 'modal'}}>
+      {/* <GameStackNavigator.Group screenOptions={{presentation: 'modal'}}>
         <GameStackNavigator.Screen
           name="ModalGameConfiguration"
           component={ModalGameConfiguration}
+          options={ModalGameConfigurationOptions}
         />
-      </GameStackNavigator.Group>
+      </GameStackNavigator.Group> */}
     </GameStackNavigator.Navigator>
   );
 };
@@ -129,3 +132,26 @@ export const GeographicalTabNavigator = () => {
     </GeographicalBottomTabNavigator.Navigator>
   );
 };
+
+const ApplicationMainStackNavigator = createNativeStackNavigator();
+
+export function MainStackNavigator() {
+  return (
+    <ApplicationMainStackNavigator.Navigator
+      screenOptions={({route}) => ({
+        headerShown: false,
+      })}>
+      <ApplicationMainStackNavigator.Screen
+        name="Tabs"
+        component={GeographicalTabNavigator}
+      />
+      <GameStackNavigator.Group screenOptions={{presentation: 'modal'}}>
+        <GameStackNavigator.Screen
+          name="ModalGameConfiguration"
+          component={ModalGameConfiguration}
+          options={ModalGameConfigurationOptions}
+        />
+      </GameStackNavigator.Group>
+    </ApplicationMainStackNavigator.Navigator>
+  );
+}

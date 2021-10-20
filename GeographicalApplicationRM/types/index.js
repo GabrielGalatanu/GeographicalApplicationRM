@@ -150,7 +150,7 @@
 //Game:
 /**
  * @typedef buttonsArray
- * @property {string[]} region
+ * @property {string[][]} region
  * @property {string[]} type
  * @property {number[]} length
  */
@@ -179,7 +179,7 @@
  */
 
 /**
- * @typedef {{StatisticsScreen: undefined, GameScreen: {region: string, questionCount: number, gameType: string}, ModalGameConfiguration: undefined }} GameStackParamList
+ * @typedef {{StatisticsScreen: undefined, GameScreen: {region: string, length: number, type: string}, ModalGameConfiguration: undefined }} GameStackParamList
  */
 
 /**

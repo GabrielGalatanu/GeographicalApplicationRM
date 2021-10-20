@@ -89,7 +89,7 @@ const ModalGameConfiguration = props => {
 
   const navigateToGame = () => {
     props.navigation.goBack();
-    props.navigation.navigate('GameScreen', {options: selectedArray});
+    props.navigation.navigate('GameScreen', selectedArray);
   };
 
   // numar magic sa schimb. (Done)
@@ -187,6 +187,21 @@ const ModalGameConfiguration = props => {
       </View>
     </View>
   );
+};
+
+export const screenOptions = () => {
+  return {
+    headerShown: true,
+    headerTitle: 'Configuration',
+    headerTintColor: 'white',
+    headerStyle: {
+      backgroundColor: Themes.colors.twitchHeader,
+    },
+    headerTitleStyle: {
+      fontFamily: 'Yrsa-Bold',
+      fontSize: 25,
+    },
+  };
 };
 
 const styles = StyleSheet.create({
