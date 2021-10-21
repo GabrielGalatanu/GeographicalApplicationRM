@@ -14,10 +14,11 @@ const ModalButton = props => {
 
   useEffect(() => {
     if (props.id === 'start') {
+      console.log(props.selected);
       if (
         props.selected.type !== '' &&
         props.selected.region !== '' &&
-        props.selected.length !== ''
+        props.selected.length !== 0
       ) {
         setActive(1);
       }

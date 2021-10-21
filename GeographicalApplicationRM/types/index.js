@@ -108,6 +108,7 @@
  * @property {string} message
  * @property {number} status
  */
+
 /**
  * @typedef CountryFetchFailed
  * @property {{promiseType: ('CountryFetchFailed'), json: CountryFetchFailedData}} data
@@ -117,6 +118,7 @@
  * @typedef CountryFetchErrorData
  * @property {string} message
  */
+
 /**
  * @typedef CountryFetchError
  * @property {{promiseType: ('CountryFetchError'), json: CountryFetchErrorData}} data
@@ -159,7 +161,6 @@
  * @typedef {React.Dispatch<React.SetStateAction<buttonsArray>>} buttonsArrayStateSetter — Sets the value for a country.
  */
 
-//Game:
 /**
  * @typedef selectedArray
  * @property {string} region
@@ -169,6 +170,11 @@
 
 /**
  * @typedef {React.Dispatch<React.SetStateAction<selectedArray>>} selectedArrayStateSetter — Sets the value for a country.
+ */
+
+//wrong:
+/**
+ * @typedef {React.Dispatch<React.SetStateAction<import('models/question')[]>>} questionsStateSetter — Sets the value for a country.
  */
 
 //Game//
