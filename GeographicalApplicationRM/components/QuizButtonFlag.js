@@ -2,13 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
-  Text,
   View,
   Dimensions,
   Image,
 } from 'react-native';
 
-export default function QuizButton({index, text, onPress, selected}) {
+export default function QuizButtonFlag({index, alpha2Code, onPress, selected}) {
   const [borderColour, setBorderColor] = useState('#565D7A');
 
   const buttonPressed = () => {
@@ -27,7 +26,14 @@ export default function QuizButton({index, text, onPress, selected}) {
     <TouchableOpacity onPress={() => buttonPressed()}>
       <View style={[styles.button, {borderColor: borderColour}]}>
         <View style={styles.leftSide}>
-          <Text style={styles.buttonText}>{text}</Text>
+          <Image
+            style={styles.flag}
+            resizeMode={'cover'}
+            source={{
+              //uri: 'https://www.countryflags.io/' + alpha2Code + '/flat/64.png',
+              uri: `http://localhost:3000/countryFlags/${alpha2Code}.png`,
+            }}
+          />
         </View>
 
         <View style={styles.rightSide}>
@@ -52,7 +58,7 @@ const styles = StyleSheet.create({
     borderColor: '#565D7A',
     paddingVertical: 12,
     paddingHorizontal: 6,
-    width: (Dimensions.get('window').width * 90) / 100,
+    width: (Dimensions.get('window').width * 40) / 100,
     backgroundColor: '#171D37',
     marginBottom: 10,
     marginHorizontal: 10,
@@ -62,9 +68,10 @@ const styles = StyleSheet.create({
   buttonText: {
     marginLeft: 20,
     color: 'white',
-    fontSize: 18,
+    fontSize: 15,
     textAlign: 'left',
-    fontFamily: 'Yrsa-Bold',
+    //fontFamily: "Mitr-Regular",
+    fontFamily: 'Mitr-SemiBold',
   },
   okCircle: {
     borderRadius: 200,
@@ -79,13 +86,13 @@ const styles = StyleSheet.create({
     width: (Dimensions.get('window').width * 6) / 100,
     height: (Dimensions.get('window').width * 6) / 100,
   },
-  leftSide: {
-    width: (Dimensions.get('window').width * 60) / 100,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
+  leftSide: {width: (Dimensions.get('window').width * 20) / 100},
   rightSide: {
     width: (Dimensions.get('window').width * 10) / 100,
     justifyContent: 'center',
+  },
+  flag: {
+    width: (Dimensions.get('window').width * 18) / 100,
+    height: (Dimensions.get('window').width * 12) / 100,
   },
 });

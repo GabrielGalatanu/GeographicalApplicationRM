@@ -11,9 +11,9 @@ import {
 import Themes from 'constants/Themes';
 
 export default function CountryButton({alpha2Code, country, onPress}) {
-  let countryFlagUrl =
-    'https://www.countryflags.io/' + alpha2Code + '/flat/64.png';
-
+  //  let countryFlagUrl =
+  //   'https://www.countryflags.io/' + alpha2Code + '/flat/64.png';
+  let countryFlagUrl = `http://localhost:3000/countryFlags/${alpha2Code}.png`;
   return (
     <TouchableOpacity style={styles.parent} onPress={() => onPress(country)}>
       <View style={styles.narrow}>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 80,
-    height: 80,
+    height: 50,
   },
   countryText: {
     fontSize: 15,

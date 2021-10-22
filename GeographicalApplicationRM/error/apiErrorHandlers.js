@@ -8,7 +8,11 @@ import {
 
 import Themes from 'constants/Themes';
 
-export const apiErrorHandler = (type, reloadButtonHandler, createMainJSXFragment) => {
+export const apiErrorHandler = (
+  type,
+  reloadButtonHandler,
+  createMainJSXFragment,
+) => {
   switch (type) {
     case '_LOADING':
       return createLoadingContent();

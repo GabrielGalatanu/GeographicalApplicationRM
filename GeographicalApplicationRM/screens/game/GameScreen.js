@@ -7,12 +7,14 @@ import {
   Dimensions,
   Button,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
 import CompletionBar from 'components/CompletionBar';
 import QuizButton from 'components/QuizButton';
+import QuizButtonsComponent from 'components/QuizButtonsComponent';
 
 import Themes from 'constants/Themes';
 import Question from 'models/question';
@@ -73,14 +75,11 @@ const GameScreen = props => {
   };
 
   const nextButtonPressed = () => {
-    //verific daca o varianta a fost selectata;
     if (selectedVariant != null) {
-      //concatenez raspunsurile intr un array;
       let selectedVariantID =
         questions[questionCounter].variantsArray[selectedVariant].id;
       questions[questionCounter].setSelectedAnswerID(selectedVariantID);
 
-      //updatez statusBar-ul;
       let bar = [];
       bar = completionBarStatus;
       if (
@@ -91,21 +90,15 @@ const GameScreen = props => {
       } else {
         bar[questionCounter] = 0;
       }
+
       setCompletionBarStatus(bar);
-      //resetez varianta selectata
       setSelectedVariant(null);
-      //updatez counterul
       setQuestionCounter(prevCount => prevCount + 1);
     }
   };
 
   const navigateBackToStatisticsScreen = () => {
     props.navigation.navigate('StatisticsScreen');
-  };
-
-  const test = () => {
-    console.log('alo');
-    console.log(questions[questionCounter].questionString);
   };
 
   if (isLoading === false) {
@@ -122,7 +115,7 @@ const GameScreen = props => {
           </Text>
           <Text style={styles.quizTypeContainerTime}>00:37</Text>
         </View>
-        {/* <Button title="test" onPress={() => test()} /> */}
+
         <View style={styles.quizQuestionCounterContainer}>
           <Text style={styles.quizQuestionCounterContainerText}>
             Question {questionCounter + 1}/{route.params.length}
@@ -142,32 +135,12 @@ const GameScreen = props => {
           </Text>
         </View>
 
-        <View style={styles.answerOptionsContainer}>
-          <QuizButton
-            index={0}
-            text={questions[questionCounter].variantsArray[0].variant}
-            selected={selectedVariant}
-            onPress={index => variantButtonPressed(index)}
-          />
-          <QuizButton
-            index={1}
-            text={questions[questionCounter].variantsArray[1].variant}
-            selected={selectedVariant}
-            onPress={index => variantButtonPressed(index)}
-          />
-          <QuizButton
-            index={2}
-            text={questions[questionCounter].variantsArray[2].variant}
-            selected={selectedVariant}
-            onPress={index => variantButtonPressed(index)}
-          />
-          <QuizButton
-            index={3}
-            text={questions[questionCounter].variantsArray[3].variant}
-            selected={selectedVariant}
-            onPress={index => variantButtonPressed(index)}
-          />
-        </View>
+        <QuizButtonsComponent
+          gameType={route.params.type}
+          variantsArray={questions[questionCounter].variantsArray}
+          selectedVariant={selectedVariant}
+          variantButtonPressed={index => variantButtonPressed(index)}
+        />
 
         <View style={styles.bottomContainer}>
           <TouchableOpacity onPress={navigateBackToStatisticsScreen}>
@@ -193,7 +166,16 @@ const GameScreen = props => {
       </LinearGradient>
     );
   } else {
-    return <View></View>;
+    return (
+      <LinearGradient
+        colors={[
+          Themes.colors.twitchGradientStart,
+          Themes.colors.twitchGradientEnd,
+        ]}
+        style={styles.screen}>
+        <ActivityIndicator size="large" color={Themes.colors.twitchHeader} />
+      </LinearGradient>
+    );
   }
 };
 
@@ -244,20 +226,15 @@ const styles = StyleSheet.create({
   questionContainer: {
     height: (Dimensions.get('window').width * 30) / 100,
     marginTop: 30,
-    marginLeft: 4,
-    marginRight: 4,
+    marginLeft: 5,
+    marginRight: 5,
     justifyContent: 'center',
   },
   questionContainerText: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 25,
     fontFamily: 'Yrsa-Bold',
     textAlign: 'center',
-  },
-  answerOptionsContainer: {
-    marginTop: 30,
-    height: (Dimensions.get('window').width * 60) / 100,
-    marginHorizontal: 10,
   },
   bottomContainer: {
     width: (Dimensions.get('window').width * 100) / 100,
