@@ -5,7 +5,7 @@ import QuizButton from 'components/QuizButton';
 import QuizButtonFlag from 'components/QuizButtonFlag';
 
 const QuizButtonsComponent = props => {
-  if (props.gameType === 'Capital') {
+  if (props.gameType === 'Capital' || props.gameType === 'Neighbour') {
     return (
       <View style={styles.answerOptionsContainer}>
         {props.variantsArray.map((variant, variantIndex) => {
