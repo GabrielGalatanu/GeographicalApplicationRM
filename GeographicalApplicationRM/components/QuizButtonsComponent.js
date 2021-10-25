@@ -2,44 +2,30 @@ import React from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 
 import QuizButton from 'components/QuizButton';
-import QuizButtonFlag from 'components/QuizButtonFlag';
 
 const QuizButtonsComponent = props => {
-  if (props.gameType === 'Capital' || props.gameType === 'Neighbour') {
-    return (
-      <View style={styles.answerOptionsContainer}>
-        {props.variantsArray.map((variant, variantIndex) => {
-          return (
-            <QuizButton
-              key={variantIndex}
-              index={variantIndex}
-              text={variant.variant}
-              selected={props.selectedVariant}
-              onPress={index => props.variantButtonPressed(index)}
-            />
-          );
-        })}
-      </View>
-    );
-  }
-
-  if (props.gameType === 'Flag') {
-    return (
-      <View style={styles.answerOptionsContainerFlag}>
-        {props.variantsArray.map((variant, variantIndex) => {
-          return (
-            <QuizButtonFlag
-              key={variantIndex}
-              index={variantIndex}
-              alpha2Code={variant.variant}
-              selected={props.selectedVariant}
-              onPress={index => props.variantButtonPressed(index)}
-            />
-          );
-        })}
-      </View>
-    );
-  }
+  return (
+    <View
+      style={
+        props.gameType === 'Capital' || props.gameType === 'Neighbour'
+          ? styles.answerOptionsContainer
+          : styles.answerOptionsContainerFlag
+      }>
+      {props.variantsArray.map((variant, variantIndex) => {
+        console.log(variant);
+        return (
+          <QuizButton
+            key={variantIndex}
+            buttonID={variantIndex}
+            variant={variant.variant}
+            selected={props.selectedVariant}
+            onPress={index => props.variantButtonPressed(index)}
+            type={props.gameType}
+          />
+        );
+      })}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

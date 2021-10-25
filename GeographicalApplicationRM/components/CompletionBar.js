@@ -1,25 +1,14 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet, View, Dimensions, Text} from 'react-native';
 
 export default function CompletionBar({count, answerArray}) {
-  let keyCounter = -1;
-  useEffect(() => {
-    keyCounter = -1;
-  }, []);
-
-  useEffect(() => {
-    keyCounter = -1;
-  }, [answerArray]);
-
   return (
     <View style={styles.barContainer}>
-      {answerArray.slice(0, count).map(item => {
-        keyCounter++;
-
-        if (item === 1 && keyCounter < count) {
+      {answerArray.slice(0, count).map((item, index) => {
+        if (item === true && index < count) {
           return (
             <View
-              key={keyCounter}
+              key={index}
               style={[
                 styles.bar,
                 styles.barCorrect,
@@ -27,16 +16,15 @@ export default function CompletionBar({count, answerArray}) {
                   width:
                     (Dimensions.get('window').width * 96) / count / 100 - 4,
                 },
-              ]}>
-              <Text>{''}</Text>
-            </View>
+              ]}
+            />
           );
         }
 
-        if (item === 0 && keyCounter < count) {
+        if (item === false && index < count) {
           return (
             <View
-              key={keyCounter}
+              key={index}
               style={[
                 styles.bar,
                 styles.barIncorrect,
@@ -44,16 +32,15 @@ export default function CompletionBar({count, answerArray}) {
                   width:
                     (Dimensions.get('window').width * 96) / count / 100 - 4,
                 },
-              ]}>
-              <Text>{''}</Text>
-            </View>
+              ]}
+            />
           );
         }
 
-        if (item === null && keyCounter < count) {
+        if (item === null && index < count) {
           return (
             <View
-              key={keyCounter}
+              key={index}
               style={[
                 styles.bar,
                 styles.barEmpty,
@@ -61,9 +48,8 @@ export default function CompletionBar({count, answerArray}) {
                   width:
                     (Dimensions.get('window').width * 96) / count / 100 - 4,
                 },
-              ]}>
-              <Text>{''}</Text>
-            </View>
+              ]}
+            />
           );
         }
       })}

@@ -8,48 +8,86 @@ import {
   Image,
 } from 'react-native';
 
-export default function QuizButton({index, text, onPress, selected}) {
-  const [borderColour, setBorderColor] = useState('#565D7A');
+import Themes from 'constants/Themes';
+
+export default function QuizButton({
+  buttonID,
+  variant,
+  onPress,
+  selected,
+  type,
+}) {
+  const [borderColour, setBorderColor] = useState(
+    Themes.colors.quizButtonNotSelected,
+  );
 
   const buttonPressed = () => {
-    onPress(index);
+    onPress(buttonID);
   };
 
   useEffect(() => {
-    if (selected !== index) {
-      setBorderColor('#565D7A');
+    if (selected === buttonID) {
+      setBorderColor(Themes.colors.quizButtonSelected);
     } else {
-      setBorderColor('#32C671');
+      setBorderColor(Themes.colors.quizButtonNotSelected);
     }
-  }, [selected, index]);
+  }, [selected, buttonID]);
 
-  return (
-    <TouchableOpacity onPress={() => buttonPressed()}>
-      <View style={[styles.button, {borderColor: borderColour}]}>
-        <View style={styles.leftSide}>
-          <Text style={styles.buttonText}>{text}</Text>
-        </View>
-
-        <View style={styles.rightSide}>
-          {selected !== index && <View style={styles.okCircle}></View>}
-          {selected === index && (
-            <Image
-              style={styles.check}
-              resizeMode={'cover'}
-              source={require('../assets/ok.png')}
-            />
-          )}
-        </View>
+  const okCircle = () => {
+    return (
+      <View style={styles.rightSide}>
+        {selected !== buttonID && <View style={styles.okCircle} />}
+        {selected === buttonID && (
+          <Image
+            style={styles.check}
+            resizeMode={'cover'}
+            // @ts-ignore
+            source={require('assets/ok.png')}
+          />
+        )}
       </View>
-    </TouchableOpacity>
-  );
+    );
+  };
+
+  if (type === 'Capital' || type === 'Neighbour') {
+    return (
+      <TouchableOpacity onPress={() => buttonPressed()}>
+        <View style={[styles.button, {borderColor: borderColour}]}>
+          <View style={styles.leftSide}>
+            <Text style={styles.buttonText}>{variant}</Text>
+          </View>
+
+          {okCircle()}
+        </View>
+      </TouchableOpacity>
+    );
+  } else if (type === 'Flag') {
+    return (
+      <TouchableOpacity onPress={() => buttonPressed()}>
+        <View style={[styles.buttonFlag, {borderColor: borderColour}]}>
+          <View style={styles.leftSideFlag}>
+            <Image
+              style={styles.flag}
+              resizeMode={'cover'}
+              source={{
+                //uri: 'https://www.countryflags.io/' + alpha2Code + '/flat/64.png',
+                uri: `http://localhost:3000/countryFlags/${variant}.png`,
+              }}
+            />
+          </View>
+
+          {okCircle()}
+        </View>
+      </TouchableOpacity>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   button: {
     borderRadius: 15,
     borderWidth: 3,
-    borderColor: '#565D7A',
+    borderColor: Themes.colors.quizButtonNotSelected,
     paddingVertical: 12,
     paddingHorizontal: 6,
     width: (Dimensions.get('window').width * 90) / 100,
@@ -69,7 +107,7 @@ const styles = StyleSheet.create({
   okCircle: {
     borderRadius: 200,
     borderWidth: 3,
-    borderColor: '#565D7A',
+    borderColor: Themes.colors.quizButtonNotSelected,
     marginRight: 10,
     width: (Dimensions.get('window').width * 6) / 100,
     height: (Dimensions.get('window').width * 6) / 100,
@@ -87,5 +125,23 @@ const styles = StyleSheet.create({
   rightSide: {
     width: (Dimensions.get('window').width * 10) / 100,
     justifyContent: 'center',
+  },
+  leftSideFlag: {width: (Dimensions.get('window').width * 20) / 100},
+  flag: {
+    width: (Dimensions.get('window').width * 18) / 100,
+    height: (Dimensions.get('window').width * 12) / 100,
+  },
+  buttonFlag: {
+    borderRadius: 15,
+    borderWidth: 3,
+    borderColor: Themes.colors.quizButtonNotSelected,
+    paddingVertical: 12,
+    paddingHorizontal: 6,
+    width: (Dimensions.get('window').width * 40) / 100,
+    backgroundColor: Themes.colors.quizButtonBackground,
+    marginBottom: 10,
+    marginHorizontal: 10,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
 });

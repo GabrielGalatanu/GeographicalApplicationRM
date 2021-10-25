@@ -15,6 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import CompletionBar from 'components/CompletionBar';
 import QuizButton from 'components/QuizButton';
 import QuizButtonsComponent from 'components/QuizButtonsComponent';
+import GameTime from 'components/GameTime';
 
 import Themes from 'constants/Themes';
 import Question from 'models/question';
@@ -29,6 +30,7 @@ import 'types/index';
 const GameScreen = props => {
   const {route} = props;
   const [isLoading, setIsLoading] = useState(true);
+  const [timer, setTimer] = useState('');
 
   /**
    * @type {[Question[], React.Dispatch<React.SetStateAction<Question[]>>]}
@@ -46,7 +48,7 @@ const GameScreen = props => {
   const [selectedVariant, setSelectedVariant] = useState(null);
 
   /**
-   * @type {[(null[]|number[]), React.Dispatch<React.SetStateAction<(null[]|number[])>>]}
+   * @type {[(null[]|boolean[]), React.Dispatch<React.SetStateAction<(null[]|boolean[])>>]}
    */
   const [completionBarStatus, setCompletionBarStatus] = useState(
     new Array(15).fill(null),
@@ -86,9 +88,9 @@ const GameScreen = props => {
         questions[questionCounter].correctAnswerID ===
         questions[questionCounter].selectedAnswerID
       ) {
-        bar[questionCounter] = 1;
+        bar[questionCounter] = true;
       } else {
-        bar[questionCounter] = 0;
+        bar[questionCounter] = false;
       }
 
       setCompletionBarStatus(bar);
@@ -113,7 +115,8 @@ const GameScreen = props => {
           <Text style={styles.quizTypeContainerText}>
             {route.params.type} Quiz
           </Text>
-          <Text style={styles.quizTypeContainerTime}>00:37</Text>
+          {/* <Text style={styles.quizTypeContainerTime}>00:37</Text> */}
+          <GameTime setTimer={time => setTimer(timer)} />
         </View>
 
         <View style={styles.quizQuestionCounterContainer}>
@@ -205,11 +208,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'Yrsa-Bold',
   },
-  quizTypeContainerTime: {
-    color: 'gray',
-    fontSize: 20,
-    fontFamily: 'Yrsa-Bold',
-  },
+  // quizTypeContainerTime: {
+  //   color: 'gray',
+  //   fontSize: 20,
+  //   fontFamily: 'Yrsa-Bold',
+  // },
   quizQuestionCounterContainer: {
     height: (Dimensions.get('window').width * 10) / 100,
     marginLeft: 10,
