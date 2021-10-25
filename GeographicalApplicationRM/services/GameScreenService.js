@@ -15,9 +15,11 @@ export const getQuestionsDataService = async (length, region, type) => {
       let variants = getVariants(countries.data.json, length, true, 3);
 
       for (let i = 0; i < length; i++) {
-        let variantsArray = [];
-
-        createVariantObjectsForQuestionClass(variantsArray, variants, i, type);
+        let variantsArray = createVariantObjectsForQuestionClass(
+          variants,
+          i,
+          type,
+        );
 
         questionString = `What is the capital of ${variants[i][0].name}?`;
 
@@ -31,9 +33,11 @@ export const getQuestionsDataService = async (length, region, type) => {
       let variants = getVariants(countries.data.json, length, true, 3);
 
       for (let i = 0; i < length; i++) {
-        let variantsArray = [];
-
-        createVariantObjectsForQuestionClass(variantsArray, variants, i, type);
+        let variantsArray = createVariantObjectsForQuestionClass(
+          variants,
+          i,
+          type,
+        );
 
         questionString = `What is the flag of ${variants[i][0].name}?`;
 
@@ -57,15 +61,18 @@ export const getQuestionsDataService = async (length, region, type) => {
           i,
         );
 
+        //???
         removeCountryAndNeighboursFromArray(tempCountries, variants, i);
 
         let incorrectNeighbours = getVariants(tempCountries, 3, false, 0);
 
         let array = [correctNeighbour, ...incorrectNeighbours];
 
-        let variantsArray = [];
-
-        createVariantObjectsForQuestionClass(variantsArray, array, i, type);
+        let variantsArray = createVariantObjectsForQuestionClass(
+          array,
+          i,
+          type,
+        );
 
         questionString = `Who is the neighbour of ${variants[i].name}?`;
 
@@ -118,18 +125,13 @@ const getVariants = (
 };
 
 /**
- * @param {{id: number, variant: string}[]} variantsArray
  * @param {CountryDTOData[]} variants
  * @param {number} index
  * @param {string} type
  */
 
-const createVariantObjectsForQuestionClass = (
-  variantsArray,
-  variants,
-  index,
-  type,
-) => {
+const createVariantObjectsForQuestionClass = (variants, index, type) => {
+  let variantsArray = [];
   if (type === 'Capital') {
     for (let j = 0; j < 4; j++) {
       variantsArray.push({
@@ -152,6 +154,7 @@ const createVariantObjectsForQuestionClass = (
       });
     }
   }
+  return variantsArray;
 };
 
 /**
