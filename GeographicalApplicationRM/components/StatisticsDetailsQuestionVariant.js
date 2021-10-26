@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   okCircle: {
     borderRadius: 200,
     borderWidth: 3,
-    borderColor: Themes.colors.quizButtonSelected,
+    borderColor: Themes.colors.quizButtonNotSelected,
     marginRight: 10,
     width: (Dimensions.get('window').width * 6) / 100,
     height: (Dimensions.get('window').width * 6) / 100,
