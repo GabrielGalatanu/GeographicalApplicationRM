@@ -8,8 +8,12 @@ import {
   Image,
 } from 'react-native';
 
+import Themes from 'constants/Themes';
+
 export default function StatisticsCellQuestionVariant(props) {
-  const [borderColour, setBorderColor] = useState('#565D7A');
+  const [borderColour, setBorderColor] = useState(
+    Themes.colors.quizButtonNotSelected,
+  );
   const [ok, setOk] = useState(null);
 
   useEffect(() => {
@@ -17,7 +21,7 @@ export default function StatisticsCellQuestionVariant(props) {
       props.question.correctAnswerID ===
       props.question.variantsArray[props.index].id
     ) {
-      setBorderColor('#32C671');
+      setBorderColor(Themes.colors.quizButtonSelected);
       setOk(true);
     }
 
@@ -26,7 +30,7 @@ export default function StatisticsCellQuestionVariant(props) {
       props.question.variantsArray[props.index].id
     ) {
       if (props.question.selectedAnswerID !== 0) {
-        setBorderColor('#CD3030');
+        setBorderColor(Themes.colors.quizButtonIncorrect);
         setOk(false);
       }
     }
@@ -93,11 +97,11 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 15,
     borderWidth: 3,
-    borderColor: '#565D7A',
+    borderColor: Themes.colors.quizButtonNotSelected,
     paddingVertical: 12,
     paddingHorizontal: 6,
     width: (Dimensions.get('window').width * 80) / 100,
-    backgroundColor: '#171D37',
+    backgroundColor: Themes.colors.quizButtonBackground,
     marginBottom: 10,
     marginHorizontal: 10,
     justifyContent: 'space-between',
@@ -106,11 +110,11 @@ const styles = StyleSheet.create({
   buttonFlag: {
     borderRadius: 15,
     borderWidth: 3,
-    borderColor: '#565D7A',
+    borderColor: Themes.colors.quizButtonNotSelected,
     paddingVertical: 12,
     paddingHorizontal: 6,
     width: (Dimensions.get('window').width * 35) / 100,
-    backgroundColor: '#171D37',
+    backgroundColor: Themes.colors.quizButtonBackground,
     marginBottom: 10,
     marginHorizontal: 10,
     justifyContent: 'space-between',
@@ -126,7 +130,7 @@ const styles = StyleSheet.create({
   okCircle: {
     borderRadius: 200,
     borderWidth: 3,
-    borderColor: '#565D7A',
+    borderColor: Themes.colors.quizButtonSelected,
     marginRight: 10,
     width: (Dimensions.get('window').width * 6) / 100,
     height: (Dimensions.get('window').width * 6) / 100,

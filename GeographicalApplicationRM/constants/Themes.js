@@ -8,6 +8,7 @@ export default {
     twitchBottom: '#9900cc',
     quizButtonSelected: '#32C671',
     quizButtonNotSelected: '#565D7A',
+    quizButtonIncorrect: '#CD3030',
     quizButtonBackground: '#171D37',
   },
   borders: {
