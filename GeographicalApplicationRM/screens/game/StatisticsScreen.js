@@ -1,8 +1,10 @@
-import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import StatisticsButton from 'components/StatisticsButton';
 import Themes from 'constants/Themes';
 import 'types/index';
 
@@ -11,6 +13,40 @@ import 'types/index';
  */
 
 const StatisticsScreen = props => {
+  const [statistics, setStatistics] = useState([]);
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('Statistics');
+      if (jsonValue !== null) {
+        setStatistics(JSON.parse(jsonValue));
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  // const removeValue = async () => {
+  //   try {
+  //     await AsyncStorage.removeItem('Statistics');
+  //   } catch (e) {
+  //     // remove error
+  //   }
+
+  //   console.log('Done.');
+  // };
+
+  useEffect(() => {
+    // removeValue();
+
+    getData();
+    const willFocusSubscription = props.navigation.addListener('focus', () => {
+      getData();
+    });
+
+    return willFocusSubscription;
+  }, [props.navigation]);
+
   return (
     <LinearGradient
       colors={[
@@ -18,9 +54,13 @@ const StatisticsScreen = props => {
         Themes.colors.twitchGradientEnd,
       ]}
       style={styles.screen}>
-      <View style={styles.statisticsContainer}>
-        <Text> No data!</Text>
-      </View>
+      <FlatList
+        data={statistics}
+        renderItem={({item}) => (
+          <StatisticsButton onPress={item => console.log('abc')} item={item} />
+        )}
+        keyExtractor={(item, index) => item.date}
+      />
 
       <View style={styles.startButtonContainer}>
         <TouchableOpacity

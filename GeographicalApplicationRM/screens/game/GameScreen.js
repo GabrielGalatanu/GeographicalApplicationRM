@@ -5,20 +5,22 @@ import {
   Text,
   View,
   Dimensions,
-  Button,
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
+import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CompletionBar from 'components/CompletionBar';
-import QuizButton from 'components/QuizButton';
+
 import QuizButtonsComponent from 'components/QuizButtonsComponent';
 import GameTime from 'components/GameTime';
 
 import Themes from 'constants/Themes';
 import Question from 'models/question';
+import Statistic from 'models/statistic';
 import {getQuestionsDataService} from 'services/GameScreenService';
 
 import 'types/index';
@@ -29,8 +31,21 @@ import 'types/index';
 
 const GameScreen = props => {
   const {route} = props;
+
+  /**
+   * @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]}
+   */
   const [isLoading, setIsLoading] = useState(true);
+
+  /**
+   * @type {[string, React.Dispatch<React.SetStateAction<string>>]}
+   */
   const [timer, setTimer] = useState('');
+
+  /**
+   * @type {[number, React.Dispatch<React.SetStateAction<number>>]}
+   */
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
 
   /**
    * @type {[Question[], React.Dispatch<React.SetStateAction<Question[]>>]}
@@ -76,7 +91,7 @@ const GameScreen = props => {
     setSelectedVariant(index);
   };
 
-  const nextButtonPressed = () => {
+  const nextButtonPressed = async () => {
     if (selectedVariant != null) {
       let selectedVariantID =
         questions[questionCounter].variantsArray[selectedVariant].id;
@@ -89,13 +104,45 @@ const GameScreen = props => {
         questions[questionCounter].selectedAnswerID
       ) {
         bar[questionCounter] = true;
+        setCorrectAnswersCount(prev => prev + 1);
       } else {
         bar[questionCounter] = false;
       }
 
       setCompletionBarStatus(bar);
       setSelectedVariant(null);
-      setQuestionCounter(prevCount => prevCount + 1);
+
+      if (questionCounter + 1 === route.params.length) {
+        let statistics = new Statistic(
+          moment().format('MMMM Do YYYY, h:mm:ss a'),
+          timer,
+          route.params.type,
+          correctAnswersCount,
+          questions,
+        );
+
+        let data = [];
+        const getData = async () => {
+          try {
+            const jsonValue = await AsyncStorage.getItem('Statistics');
+            if (jsonValue !== null) {
+              data = JSON.parse(jsonValue);
+            } else {
+              data = [];
+            }
+            data.push(statistics);
+            const dataStringify = JSON.stringify(data);
+
+            await AsyncStorage.setItem('Statistics', dataStringify);
+            props.navigation.goBack();
+          } catch (e) {
+            // error reading value
+          }
+        };
+        getData();
+      } else {
+        setQuestionCounter(prevCount => prevCount + 1);
+      }
     }
   };
 
@@ -103,7 +150,7 @@ const GameScreen = props => {
     props.navigation.navigate('StatisticsScreen');
   };
 
-  if (isLoading === false) {
+  if (isLoading !== true) {
     return (
       <LinearGradient
         colors={[
