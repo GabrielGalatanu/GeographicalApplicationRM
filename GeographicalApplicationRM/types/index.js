@@ -185,7 +185,7 @@
  */
 
 /**
- * @typedef {{StatisticsScreen: undefined, GameScreen: {region: string, length: number, type: string}, ModalGameConfiguration: undefined }} GameStackParamList
+ * @typedef {{StatisticsScreen: undefined,StatisticsDetailsScreen: {data: any}, GameScreen: {region: string, length: number, type: string}, ModalGameConfiguration: undefined }} GameStackParamList
  */
 
 /**

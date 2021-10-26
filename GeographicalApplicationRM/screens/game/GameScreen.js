@@ -92,6 +92,7 @@ const GameScreen = props => {
   };
 
   const nextButtonPressed = async () => {
+    let tempCorrectAnswerCount = correctAnswersCount;
     if (selectedVariant != null) {
       let selectedVariantID =
         questions[questionCounter].variantsArray[selectedVariant].id;
@@ -105,6 +106,7 @@ const GameScreen = props => {
       ) {
         bar[questionCounter] = true;
         setCorrectAnswersCount(prev => prev + 1);
+        tempCorrectAnswerCount++;
       } else {
         bar[questionCounter] = false;
       }
@@ -117,7 +119,7 @@ const GameScreen = props => {
           moment().format('MMMM Do YYYY, h:mm:ss a'),
           timer,
           route.params.type,
-          correctAnswersCount,
+          tempCorrectAnswerCount,
           questions,
         );
 

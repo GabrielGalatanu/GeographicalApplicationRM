@@ -18,6 +18,9 @@ import RegionListScreen, {
 import StatisticsScreen, {
   screenOptions as StatisticsScreenOptions,
 } from '../screens/game/StatisticsScreen';
+import StatisticsDetailsScreen, {
+  screenOptions as StatisticsDetailsScreenOptions,
+} from '../screens/game/StatisticsDetailsScreen';
 import GameScreen, {
   screenOptions as GameScreenOptions,
 } from '../screens/game/GameScreen';
@@ -72,10 +75,16 @@ export const GameNavigator = () => {
         options={StatisticsScreenOptions}
       />
       <GameStackNavigator.Screen
+        name="StatisticsDetailsScreen"
+        component={StatisticsDetailsScreen}
+        options={StatisticsDetailsScreenOptions}
+      />
+      <GameStackNavigator.Screen
         name="GameScreen"
         component={GameScreen}
         options={GameScreenOptions}
       />
+
       {/* <GameStackNavigator.Group screenOptions={{presentation: 'modal'}}>
         <GameStackNavigator.Screen
           name="ModalGameConfiguration"

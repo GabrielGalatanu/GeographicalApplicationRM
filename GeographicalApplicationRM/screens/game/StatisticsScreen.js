@@ -47,6 +47,10 @@ const StatisticsScreen = props => {
     return willFocusSubscription;
   }, [props.navigation]);
 
+  const navigateToStatisticsDetailsScreen = data => {
+    props.navigation.navigate('StatisticsDetailsScreen', {data: data});
+  };
+
   return (
     <LinearGradient
       colors={[
@@ -57,7 +61,10 @@ const StatisticsScreen = props => {
       <FlatList
         data={statistics}
         renderItem={({item}) => (
-          <StatisticsButton onPress={item => console.log('abc')} item={item} />
+          <StatisticsButton
+            onPress={data => navigateToStatisticsDetailsScreen(data)}
+            item={item}
+          />
         )}
         keyExtractor={(item, index) => item.date}
       />

@@ -33,7 +33,7 @@ export default function QuizButton({
     }
   }, [selected, buttonID]);
 
-  const okCircle = () => {
+  const createOkCircle = () => {
     return (
       <View style={styles.rightSide}>
         {selected !== buttonID && <View style={styles.okCircle} />}
@@ -57,7 +57,7 @@ export default function QuizButton({
             <Text style={styles.buttonText}>{variant}</Text>
           </View>
 
-          {okCircle()}
+          {createOkCircle()}
         </View>
       </TouchableOpacity>
     );
@@ -76,7 +76,7 @@ export default function QuizButton({
             />
           </View>
 
-          {okCircle()}
+          {createOkCircle()}
         </View>
       </TouchableOpacity>
     );
