@@ -2,6 +2,10 @@ import React from 'react';
 import {StyleSheet, Text, View, Dimensions} from 'react-native';
 
 export default function DetailsSection({country, currenciesValues}) {
+  const numberWithCommas = number => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
+
   return (
     <>
       <View style={styles.detailsLineContainer}>
@@ -20,14 +24,16 @@ export default function DetailsSection({country, currenciesValues}) {
         </View>
 
         <Text style={styles.countryNameText}>
-          Population: {country.population}
+          Population: {numberWithCommas(country.population)}
         </Text>
 
         <View style={styles.separationLineContainer}>
           <View style={styles.separationLine} />
         </View>
 
-        <Text style={styles.countryNameText}>Area: {country.area} Km²</Text>
+        <Text style={styles.countryNameText}>
+          Area: {numberWithCommas(country.area)} Km²
+        </Text>
 
         <View style={styles.separationLineContainer}>
           <View style={styles.separationLine} />

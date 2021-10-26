@@ -1,7 +1,15 @@
-import React from 'react';
-import {StyleSheet, Text, View, Dimensions} from 'react-native';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import Collapsible from 'react-native-collapsible';
 
 export default function TimezonesSection({localTime}) {
+  const [isCollapsed, setIsCollapsed] = useState(true);
   return (
     <>
       <View style={styles.detailsLineContainer}>
@@ -12,29 +20,40 @@ export default function TimezonesSection({localTime}) {
         <View style={styles.detailsLine} />
       </View>
 
-      <View style={styles.timezonesContainer}>
-        {localTime.map((time, index) => {
-          if (index === localTime.length - 1) {
+      <View style={styles.viewTimeZonesButton}>
+        <TouchableOpacity
+          onPress={() => {
+            setIsCollapsed(prev => !prev);
+          }}>
+          <Text style={styles.viewTimeZonesButtonText}>View Timezones</Text>
+        </TouchableOpacity>
+      </View>
+
+      <Collapsible collapsed={isCollapsed}>
+        <View style={styles.timezonesContainer}>
+          {localTime.map((time, index) => {
+            if (index === localTime.length - 1) {
+              return (
+                <>
+                  <Text key={time.timezone} style={styles.countryNameText}>
+                    {time.timezone}: {'   '} {time.time}
+                  </Text>
+                </>
+              );
+            }
             return (
               <>
                 <Text key={time.timezone} style={styles.countryNameText}>
                   {time.timezone}: {'   '} {time.time}
                 </Text>
+                <View style={styles.separationLineContainer}>
+                  <View style={styles.separationLine} />
+                </View>
               </>
             );
-          }
-          return (
-            <>
-              <Text key={time.timezone} style={styles.countryNameText}>
-                {time.timezone}: {'   '} {time.time}
-              </Text>
-              <View style={styles.separationLineContainer}>
-                <View style={styles.separationLine} />
-              </View>
-            </>
-          );
-        })}
-      </View>
+          })}
+        </View>
+      </Collapsible>
     </>
   );
 }
@@ -84,5 +103,18 @@ const styles = StyleSheet.create({
     width: (Dimensions.get('window').width * 95) / 100,
     alignItems: 'flex-start',
     justifyContent: 'center',
+  },
+  viewTimeZonesButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  viewTimeZonesButtonText: {
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'center',
+    fontFamily: 'Yrsa-Bold',
   },
 });

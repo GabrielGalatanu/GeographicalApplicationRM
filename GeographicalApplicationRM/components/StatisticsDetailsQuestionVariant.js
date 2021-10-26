@@ -39,11 +39,12 @@ export default function StatisticsCellQuestionVariant(props) {
   const createOkCheck = () => {
     return (
       <View style={styles.rightSide}>
-        {ok === null && <View style={styles.okCircle}></View>}
+        {ok === null && <View style={styles.okCircle} />}
         {ok === true && (
           <Image
             style={styles.check}
             resizeMode={'cover'}
+            // @ts-ignore
             source={require('../assets/ok.png')}
           />
         )}
@@ -51,6 +52,7 @@ export default function StatisticsCellQuestionVariant(props) {
           <Image
             style={styles.check}
             resizeMode={'cover'}
+            // @ts-ignore
             source={require('../assets/wrong.png')}
           />
         )}

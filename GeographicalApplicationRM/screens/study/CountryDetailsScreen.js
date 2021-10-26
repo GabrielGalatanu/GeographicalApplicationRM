@@ -6,6 +6,7 @@ import {
   ScrollView,
   Dimensions,
   Image,
+  Button,
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -36,6 +37,8 @@ const CountryDetailsScreen = props => {
    * @type {[(import('react').ReactElement|string) ,React.Dispatch<React.SetStateAction<(import('react').ReactElement|string)>>]}.
    */
   const [apiErrorHandlerJSX, setApiErrorHandlerJSX] = useState();
+
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   //Time counter:
   const timeCounter = useCallback(() => {

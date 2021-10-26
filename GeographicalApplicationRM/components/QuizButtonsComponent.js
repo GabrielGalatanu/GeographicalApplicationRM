@@ -16,10 +16,9 @@ const QuizButtonsComponent = props => {
         return (
           <QuizButton
             key={variantIndex}
-            buttonID={variantIndex}
             variant={variant.variant}
-            selected={props.selectedVariant}
-            onPress={index => props.variantButtonPressed(index)}
+            selected={props.selectedVariant === variantIndex ? true : false}
+            onPress={() => props.variantButtonPressed(variantIndex)}
             type={props.gameType}
           />
         );

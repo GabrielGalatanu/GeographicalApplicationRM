@@ -8,6 +8,8 @@ import StatisticsButton from 'components/StatisticsButton';
 import Themes from 'constants/Themes';
 import 'types/index';
 
+import {loadGameStatisticsAsyncStorage} from 'services/StatisticsScreenServices';
+
 /**
  * @param {StatisticsScreenProps} props
  */
@@ -16,14 +18,7 @@ const StatisticsScreen = props => {
   const [statistics, setStatistics] = useState([]);
 
   const getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('Statistics');
-      if (jsonValue !== null) {
-        setStatistics(JSON.parse(jsonValue));
-      }
-    } catch (e) {
-      // error reading value
-    }
+    setStatistics(await loadGameStatisticsAsyncStorage());
   };
 
   // const removeValue = async () => {

@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Text, StyleSheet} from 'react-native';
 
 import moment from 'moment';
 
 const GameTime = props => {
+  const {setTimer} = props;
   const [time, setTime] = useState('00:00');
 
   useEffect(() => {
@@ -16,13 +17,13 @@ const GameTime = props => {
       let minutes = m.minutes() > 9 ? `${m.minutes()}` : `0${m.minutes()}`;
       let seconds = m.seconds() > 9 ? `${m.seconds()}` : `0${m.seconds()}`;
       setTime(`${minutes}:${seconds}`);
-      props.setTimer(`${minutes}:${seconds}`);
+      setTimer(`${minutes}:${seconds}`);
     }, 1000);
 
     return () => {
       clearInterval(countryTimeIntervalCounter);
     };
-  }, [props]);
+  }, []);
 
   return <Text style={styles.quizTypeContainerTime}>{time}</Text>;
 };

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 
 import {
   StyleSheet,
@@ -22,6 +22,7 @@ import Themes from 'constants/Themes';
 import Question from 'models/question';
 import Statistic from 'models/statistic';
 import {getQuestionsDataService} from 'services/GameScreenService';
+import {saveGameStatisticsAsyncStorage} from 'services/StatisticsScreenServices';
 
 import 'types/index';
 
@@ -36,16 +37,6 @@ const GameScreen = props => {
    * @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]}
    */
   const [isLoading, setIsLoading] = useState(true);
-
-  /**
-   * @type {[string, React.Dispatch<React.SetStateAction<string>>]}
-   */
-  const [timer, setTimer] = useState('');
-
-  /**
-   * @type {[number, React.Dispatch<React.SetStateAction<number>>]}
-   */
-  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
 
   /**
    * @type {[Question[], React.Dispatch<React.SetStateAction<Question[]>>]}
@@ -68,6 +59,9 @@ const GameScreen = props => {
   const [completionBarStatus, setCompletionBarStatus] = useState(
     new Array(15).fill(null),
   );
+
+  let timer = useRef('');
+  let correctAnswersCount = useRef(0);
 
   useEffect(() => {
     const getQuestions = async () => {
@@ -92,7 +86,6 @@ const GameScreen = props => {
   };
 
   const nextButtonPressed = async () => {
-    let tempCorrectAnswerCount = correctAnswersCount;
     if (selectedVariant != null) {
       let selectedVariantID =
         questions[questionCounter].variantsArray[selectedVariant].id;
@@ -105,8 +98,9 @@ const GameScreen = props => {
         questions[questionCounter].selectedAnswerID
       ) {
         bar[questionCounter] = true;
-        setCorrectAnswersCount(prev => prev + 1);
-        tempCorrectAnswerCount++;
+        // setCorrectAnswersCount(prev => prev + 1);
+
+        correctAnswersCount.current++;
       } else {
         bar[questionCounter] = false;
       }
@@ -117,31 +111,14 @@ const GameScreen = props => {
       if (questionCounter + 1 === route.params.length) {
         let statistics = new Statistic(
           moment().format('MMMM Do YYYY, h:mm:ss a'),
-          timer,
+          timer.current,
           route.params.type,
-          tempCorrectAnswerCount,
+          correctAnswersCount.current,
           questions,
         );
 
-        let data = [];
-        const getData = async () => {
-          try {
-            const jsonValue = await AsyncStorage.getItem('Statistics');
-            if (jsonValue !== null) {
-              data = JSON.parse(jsonValue);
-            } else {
-              data = [];
-            }
-            data.push(statistics);
-            const dataStringify = JSON.stringify(data);
-
-            await AsyncStorage.setItem('Statistics', dataStringify);
-            props.navigation.goBack();
-          } catch (e) {
-            // error reading value
-          }
-        };
-        getData();
+        await saveGameStatisticsAsyncStorage(statistics);
+        props.navigation.goBack();
       } else {
         setQuestionCounter(prevCount => prevCount + 1);
       }
@@ -164,8 +141,8 @@ const GameScreen = props => {
           <Text style={styles.quizTypeContainerText}>
             {route.params.type} Quiz
           </Text>
-          {/* <Text style={styles.quizTypeContainerTime}>00:37</Text> */}
-          <GameTime setTimer={time => setTimer(timer)} />
+
+          <GameTime setTimer={time => (timer.current = time)} />
         </View>
 
         <View style={styles.quizQuestionCounterContainer}>

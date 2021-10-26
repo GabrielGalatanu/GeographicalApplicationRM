@@ -10,34 +10,28 @@ import {
 
 import Themes from 'constants/Themes';
 
-export default function QuizButton({
-  buttonID,
-  variant,
-  onPress,
-  selected,
-  type,
-}) {
+export default function QuizButton({variant, onPress, selected, type}) {
   const [borderColour, setBorderColor] = useState(
     Themes.colors.quizButtonNotSelected,
   );
 
   const buttonPressed = () => {
-    onPress(buttonID);
+    onPress();
   };
 
   useEffect(() => {
-    if (selected === buttonID) {
+    if (selected) {
       setBorderColor(Themes.colors.quizButtonSelected);
     } else {
       setBorderColor(Themes.colors.quizButtonNotSelected);
     }
-  }, [selected, buttonID]);
+  }, [selected]);
 
   const createOkCircle = () => {
     return (
       <View style={styles.rightSide}>
-        {selected !== buttonID && <View style={styles.okCircle} />}
-        {selected === buttonID && (
+        {selected === false && <View style={styles.okCircle} />}
+        {selected === true && (
           <Image
             style={styles.check}
             resizeMode={'cover'}
