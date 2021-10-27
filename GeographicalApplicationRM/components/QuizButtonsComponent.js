@@ -12,12 +12,15 @@ const QuizButtonsComponent = props => {
           : styles.answerOptionsContainerFlag
       }>
       {props.variantsArray.map((variant, variantIndex) => {
-        console.log(variant);
         return (
           <QuizButton
             key={variantIndex}
             variant={variant.variant}
-            selected={props.selectedVariant === variantIndex ? true : false}
+            selected={
+              props.selectedVariantsArray[props.questionNumber] === variantIndex
+                ? true
+                : false
+            }
             onPress={() => props.variantButtonPressed(variantIndex)}
             type={props.gameType}
           />

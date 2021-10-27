@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CompletionBar from 'components/CompletionBar';
 
 import QuizButtonsComponent from 'components/QuizButtonsComponent';
+import GameScreenBottomButton from 'components/GameScreenBottomButton';
 import GameTime from 'components/GameTime';
 
 import Themes from 'constants/Themes';
@@ -49,9 +50,11 @@ const GameScreen = props => {
   const [questionCounter, setQuestionCounter] = useState(0);
 
   /**
-   * @type {[(null|number), React.Dispatch<React.SetStateAction<(null|number)>>]}
+   * @type {[null[]|number[], React.Dispatch<React.SetStateAction<(null[]|number[])>>]}
    */
-  const [selectedVariant, setSelectedVariant] = useState(null);
+  const [selectedVariantsArray, setSelectedVariantArray] = useState(
+    new Array(15).fill(null),
+  );
 
   /**
    * @type {[(null[]|boolean[]), React.Dispatch<React.SetStateAction<(null[]|boolean[])>>]}
@@ -59,6 +62,11 @@ const GameScreen = props => {
   const [completionBarStatus, setCompletionBarStatus] = useState(
     new Array(15).fill(null),
   );
+
+  /**
+   * @type {[boolean, React.Dispatch<React.SetStateAction<(boolean)>>]}
+   */
+  const [gameIsDone, setGameIsDone] = useState(false);
 
   let timer = useRef('');
   let correctAnswersCount = useRef(0);
@@ -82,47 +90,64 @@ const GameScreen = props => {
   }, [route.params]);
 
   const variantButtonPressed = index => {
-    setSelectedVariant(index);
-  };
+    // setSelectedVariant(index);
 
-  const nextButtonPressed = async () => {
-    if (selectedVariant != null) {
-      let selectedVariantID =
-        questions[questionCounter].variantsArray[selectedVariant].id;
-      questions[questionCounter].setSelectedAnswerID(selectedVariantID);
+    let array = [...selectedVariantsArray];
+    array[questionCounter] = index;
+    setSelectedVariantArray(array);
 
-      let bar = [];
-      bar = completionBarStatus;
-      if (
-        questions[questionCounter].correctAnswerID ===
-        questions[questionCounter].selectedAnswerID
-      ) {
-        bar[questionCounter] = true;
-        // setCorrectAnswersCount(prev => prev + 1);
+    let completionBar = [...completionBarStatus];
+    completionBar[questionCounter] = true;
+    setCompletionBarStatus(completionBar);
 
-        correctAnswersCount.current++;
-      } else {
-        bar[questionCounter] = false;
+    for (let i = 0; i < props.route.params.length; i++) {
+      if (array[i] === null) {
+        break;
       }
-
-      setCompletionBarStatus(bar);
-      setSelectedVariant(null);
-
-      if (questionCounter + 1 === route.params.length) {
-        let statistics = new Statistic(
-          moment().format('MMMM Do YYYY, h:mm:ss a'),
-          timer.current,
-          route.params.type,
-          correctAnswersCount.current,
-          questions,
-        );
-
-        await saveGameStatisticsAsyncStorage(statistics);
-        props.navigation.goBack();
-      } else {
-        setQuestionCounter(prevCount => prevCount + 1);
+      if (i === props.route.params.length - 1) {
+        setGameIsDone(true);
       }
     }
+  };
+
+  const completionBarPressed = index => {
+    setQuestionCounter(index);
+  };
+
+  const scrollFunction = direction => {
+    if (direction === 'prev') {
+      if (questionCounter !== 0) {
+        setQuestionCounter(prev => prev - 1);
+      }
+    } else {
+      if (questionCounter !== route.params.length - 1) {
+        setQuestionCounter(prev => prev + 1);
+      }
+    }
+  };
+
+  const submitButton = async () => {
+    for (let i = 0; i < props.route.params.length; i++) {
+      let selectedVariantID =
+        questions[i].variantsArray[selectedVariantsArray[i]].id;
+
+      questions[i].setSelectedAnswerID(selectedVariantID);
+
+      if (questions[i].correctAnswerID === questions[i].selectedAnswerID) {
+        correctAnswersCount.current++;
+      }
+    }
+
+    let statistics = new Statistic(
+      moment().format('MMMM Do YYYY, h:mm:ss a'),
+      timer.current,
+      route.params.type,
+      correctAnswersCount.current,
+      questions,
+    );
+
+    await saveGameStatisticsAsyncStorage(statistics);
+    props.navigation.goBack();
   };
 
   const navigateBackToStatisticsScreen = () => {
@@ -155,6 +180,7 @@ const GameScreen = props => {
           <CompletionBar
             count={route.params.length}
             answerArray={completionBarStatus}
+            onPress={index => completionBarPressed(index)}
           />
         </View>
 
@@ -167,7 +193,8 @@ const GameScreen = props => {
         <QuizButtonsComponent
           gameType={route.params.type}
           variantsArray={questions[questionCounter].variantsArray}
-          selectedVariant={selectedVariant}
+          questionNumber={questionCounter}
+          selectedVariantsArray={selectedVariantsArray}
           variantButtonPressed={index => variantButtonPressed(index)}
         />
 
@@ -178,19 +205,21 @@ const GameScreen = props => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={nextButtonPressed}>
-            <View
-              style={[
-                styles.nextButton,
-                // eslint-disable-next-line react-native/no-inline-styles
-                {
-                  backgroundColor:
-                    selectedVariant !== null ? '#06CFF2' : '#555D7A',
-                },
-              ]}>
-              <Text style={styles.nextButtonText}>Next</Text>
-            </View>
-          </TouchableOpacity>
+          <GameScreenBottomButton
+            text="Prev"
+            available={questionCounter > 0}
+            onPress={() => scrollFunction('prev')}
+          />
+          <GameScreenBottomButton
+            text="Next"
+            available={questionCounter < props.route.params.length - 1}
+            onPress={() => scrollFunction('next')}
+          />
+          <GameScreenBottomButton
+            text="Submit"
+            available={gameIsDone !== false}
+            onPress={submitButton}
+          />
         </View>
       </LinearGradient>
     );
@@ -276,9 +305,10 @@ const styles = StyleSheet.create({
   },
   quitButton: {
     borderRadius: 15,
-    marginRight: 15,
-    width: (Dimensions.get('window').width * 40) / 100,
-    height: (Dimensions.get('window').width * 15) / 100,
+    marginLeft: 5,
+    marginRight: 5,
+    width: (Dimensions.get('window').width * 20) / 100,
+    height: (Dimensions.get('window').width * 10) / 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -286,19 +316,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     textAlign: 'center',
-    fontFamily: 'Yrsa-Bold',
-  },
-  nextButton: {
-    borderRadius: 15,
-    marginRight: 15,
-    width: (Dimensions.get('window').width * 40) / 100,
-    height: (Dimensions.get('window').width * 15) / 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  nextButtonText: {
-    color: 'white',
-    fontSize: 20,
     fontFamily: 'Yrsa-Bold',
   },
 });
