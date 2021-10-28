@@ -2,13 +2,15 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector, useDispatch} from 'react-redux';
 
 import StatisticsButton from 'components/StatisticsButton';
 import Themes from 'constants/Themes';
 import 'types/index';
 
 import {loadGameStatisticsAsyncStorage} from 'services/StatisticsScreenServices';
+
+import * as statisticsActions from '../../store/actions/statistics';
 
 /**
  * @param {StatisticsScreenProps} props
@@ -17,9 +19,16 @@ import {loadGameStatisticsAsyncStorage} from 'services/StatisticsScreenServices'
 const StatisticsScreen = props => {
   const [statistics, setStatistics] = useState([]);
 
-  const getData = async () => {
-    setStatistics(await loadGameStatisticsAsyncStorage());
-  };
+  const statisticsRedux = useSelector(
+    state => state.statisticsRedux.statisticsRedux,
+  );
+  const dispatch = useDispatch();
+
+  //Getting data using the service:
+
+  // const getData = async () => {
+  //   setStatistics(await loadGameStatisticsAsyncStorage());
+  // };
 
   // const removeValue = async () => {
   //   try {
@@ -31,16 +40,26 @@ const StatisticsScreen = props => {
   //   console.log('Done.');
   // };
 
+  // useEffect(() => {
+  //   // removeValue();
+
+  //   getData();
+  //   const willFocusSubscription = props.navigation.addListener('focus', () => {
+  //     getData();
+  //   });
+
+  //   return willFocusSubscription;
+  // }, [props.navigation]);
+
+  //Getting data using the service;
+
   useEffect(() => {
-    // removeValue();
+    setStatistics(statisticsRedux);
+  }, [statisticsRedux]);
 
-    getData();
-    const willFocusSubscription = props.navigation.addListener('focus', () => {
-      getData();
-    });
-
-    return willFocusSubscription;
-  }, [props.navigation]);
+  useEffect(() => {
+    dispatch(statisticsActions.loadStatistics());
+  }, [dispatch]);
 
   const navigateToStatisticsDetailsScreen = data => {
     props.navigation.navigate('StatisticsDetailsScreen', {data: data});

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 
 import {
   StyleSheet,
@@ -27,12 +27,16 @@ import {saveGameStatisticsAsyncStorage} from 'services/StatisticsScreenServices'
 
 import 'types/index';
 
+import {useDispatch} from 'react-redux';
+import * as statisticsActions from '../../store/actions/statistics';
+
 /**
  * @param {GameScreenProps} props
  */
 
 const GameScreen = props => {
   const {route} = props;
+  const dispatch = useDispatch();
 
   /**
    * @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]}
@@ -53,14 +57,14 @@ const GameScreen = props => {
    * @type {[null[]|number[], React.Dispatch<React.SetStateAction<(null[]|number[])>>]}
    */
   const [selectedVariantsArray, setSelectedVariantArray] = useState(
-    new Array(15).fill(null),
+    new Array(route.params.length).fill(null),
   );
 
   /**
    * @type {[(null[]|boolean[]), React.Dispatch<React.SetStateAction<(null[]|boolean[])>>]}
    */
   const [completionBarStatus, setCompletionBarStatus] = useState(
-    new Array(15).fill(null),
+    new Array(route.params.length).fill(null),
   );
 
   /**
@@ -146,13 +150,20 @@ const GameScreen = props => {
       questions,
     );
 
-    await saveGameStatisticsAsyncStorage(statistics);
+    //SAVE THE STATISTIC USING THE SERVICE:
+    //await saveGameStatisticsAsyncStorage(statistics);
+
+    dispatch(statisticsActions.saveStatistics(statistics));
     props.navigation.goBack();
   };
 
   const navigateBackToStatisticsScreen = () => {
     props.navigation.navigate('StatisticsScreen');
   };
+
+  const getTimer = useCallback(time => {
+    timer.current = time;
+  }, []);
 
   if (isLoading !== true) {
     return (
@@ -167,7 +178,7 @@ const GameScreen = props => {
             {route.params.type} Quiz
           </Text>
 
-          <GameTime setTimer={time => (timer.current = time)} />
+          <GameTime setTimer={getTimer} />
         </View>
 
         <View style={styles.quizQuestionCounterContainer}>

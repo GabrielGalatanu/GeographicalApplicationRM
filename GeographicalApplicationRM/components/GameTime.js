@@ -23,7 +23,7 @@ const GameTime = props => {
     return () => {
       clearInterval(countryTimeIntervalCounter);
     };
-  }, []);
+  }, [setTimer]);
 
   return <Text style={styles.quizTypeContainerTime}>{time}</Text>;
 };
